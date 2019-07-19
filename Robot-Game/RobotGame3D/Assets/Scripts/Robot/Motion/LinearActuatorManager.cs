@@ -4,13 +4,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using UnityEngine;
 
 namespace Assets.Scripts.Robot.Motion {
 
-	public class LinearActuatorManager : MotionManager {
-
-		public float maxExtensionDistance;
-		public float extensionSpeed;
+	public class LinearActuatorManager : MotionManager<ConfigurableJoint> {
 
 		protected override void InitConstraints() {
 			throw new NotImplementedException();

@@ -8,7 +8,7 @@ using UnityEngine;
 
 namespace Assets.Scripts.Robot.Motion {
 
-	public class RotaryActuatorManager : MotionManager {
+	public class RotaryActuatorManager : MotionManager<HingeJoint> {
 
 		/// <summary>
 		/// Determines whether there is a limit to how far the actuator can rotate.
@@ -33,32 +33,29 @@ namespace Assets.Scripts.Robot.Motion {
 		/// <summary>
 		/// The axes of the angle of rotation, relative to this component's <code>Transform</code>
 		/// </summary>
-		public Vector3 rotationAxes;
+		public Vector3 axis;
 
 		protected override void InitConstraints() {
-			this.joint.xMotion = ConfigurableJointMotion.Locked;
-			this.joint.yMotion = ConfigurableJointMotion.Locked;
-			this.joint.zMotion = ConfigurableJointMotion.Locked;
-			this.joint.linearLimit = new SoftJointLimit() {
-				limit = 0
+			this.joint.axis = axis;
+			this.joint.useLimits = this.hasRotationLimit;
+			this.joint.limits = new JointLimits() {
+				max = this.rotationMaxLimit, 
+				min = this.rotationMinLimit
 			};
-
-			this.joint.angularXMotion = this.hasRotationLimit ? ConfigurableJointMotion.Limited : ConfigurableJointMotion.Free;
-			this.joint.angularYMotion = this.hasRotationLimit ? ConfigurableJointMotion.Limited : ConfigurableJointMotion.Free;
-			this.joint.angularZMotion = this.hasRotationLimit ? ConfigurableJointMotion.Limited : ConfigurableJointMotion.Free;
-
-			this.joint.autoConfigureConnectedAnchor = true;
-			this.joint.rotationDriveMode = RotationDriveMode.Slerp;
-			
-			throw new NotImplementedException();
+			this.joint.useMotor = true;
+			this.joint.motor = new JointMotor() {
+				force = 0, 
+				freeSpin = false, 
+				targetVelocity = 0
+			};
 		}
 
-		public bool RotateActuatorTo(float degrees) {
-			throw new NotImplementedException();
-		}
-
-		public bool RotateActuatorBy(float degrees) {
-			throw new NotImplementedException();
+		public void SetActuatorSpeed(float speed) {
+			this.joint.motor = new JointMotor() {
+				force = speed,
+				freeSpin = false,
+				targetVelocity = speed
+			};
 		}
 
 	}

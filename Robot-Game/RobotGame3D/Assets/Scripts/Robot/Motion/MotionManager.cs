@@ -5,9 +5,9 @@ using UnityEngine;
 
 namespace Assets.Scripts.Robot.Motion {
 	
-	public abstract class MotionManager : Manager {
+	public abstract class MotionManager<T> : Manager where T : Joint {
 
-		public ConfigurableJoint joint;
+		public T joint;
 		
 	}
 
