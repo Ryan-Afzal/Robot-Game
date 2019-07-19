@@ -231,10 +231,10 @@ HingeJoint:
     spring: 0
     damper: 0
     targetPosition: 0
-  m_UseMotor: 1
+  m_UseMotor: 0
   m_Motor:
-    targetVelocity: 100
-    force: 100
+    targetVelocity: 0
+    force: 0
     freeSpin: 0
   m_UseLimits: 0
   m_Limits:
@@ -444,7 +444,7 @@ Transform:
   m_GameObject: {fileID: 718918184}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 5, y: 5, z: 5}
+  m_LocalScale: {x: 10, y: 1, z: 10}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 3
@@ -503,10 +503,10 @@ HingeJoint:
     spring: 0
     damper: 0
     targetPosition: 0
-  m_UseMotor: 1
+  m_UseMotor: 0
   m_Motor:
-    targetVelocity: 100
-    force: 100
+    targetVelocity: 0
+    force: 0
     freeSpin: 0
   m_UseLimits: 0
   m_Limits:
@@ -686,13 +686,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 963194225}
-  m_LocalRotation: {x: -0.004444088, y: -0.97207963, z: -0.001072559, w: -0.23460674}
-  m_LocalPosition: {x: -5.13, y: 1.04, z: 6.12}
+  m_LocalRotation: {x: -0.09023088, y: -0.9046486, z: 0.35573983, w: -0.21660668}
+  m_LocalPosition: {x: -11.98, y: 13.94, z: 19.74}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: -207.137, z: 0.52400005}
+  m_LocalEulerAnglesHint: {x: 43.057003, y: -206.648, z: 0.717}
 --- !u!1 &1200207990
 GameObject:
   m_ObjectHideFlags: 0
@@ -725,16 +725,16 @@ HingeJoint:
   m_Anchor: {x: 0, y: 1.0000002, z: 0}
   m_Axis: {x: 0, y: 1, z: 0}
   m_AutoConfigureConnectedAnchor: 1
-  m_ConnectedAnchor: {x: 0.5, y: 0, z: -0.8749999}
+  m_ConnectedAnchor: {x: 0.5, y: 0, z: -0.8749998}
   m_UseSpring: 0
   m_Spring:
     spring: 0
     damper: 0
     targetPosition: 0
-  m_UseMotor: 1
+  m_UseMotor: 0
   m_Motor:
-    targetVelocity: 100
-    force: 100
+    targetVelocity: 0
+    force: 0
     freeSpin: 0
   m_UseLimits: 0
   m_Limits:
@@ -870,16 +870,16 @@ HingeJoint:
   m_Anchor: {x: 0, y: 1.0000002, z: 0}
   m_Axis: {x: 0, y: 1, z: 0}
   m_AutoConfigureConnectedAnchor: 1
-  m_ConnectedAnchor: {x: -0.5, y: 0, z: -0.8749999}
+  m_ConnectedAnchor: {x: -0.5, y: 0, z: -0.8749998}
   m_UseSpring: 0
   m_Spring:
     spring: 0
     damper: 0
     targetPosition: 0
-  m_UseMotor: 1
+  m_UseMotor: 0
   m_Motor:
-    targetVelocity: 100
-    force: 100
+    targetVelocity: 0
+    force: 0
     freeSpin: 0
   m_UseLimits: 0
   m_Limits:
@@ -995,8 +995,8 @@ GameObject:
   - component: {fileID: 1709442302}
   - component: {fileID: 1709442301}
   - component: {fileID: 1709442300}
-  - component: {fileID: 1709442304}
   - component: {fileID: 1709442306}
+  - component: {fileID: 1709442304}
   m_Layer: 0
   m_Name: RobotBase
   m_TagString: Untagged
@@ -1085,9 +1085,17 @@ MonoBehaviour:
   m_GameObject: {fileID: 1709442299}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bc6ab6dd0796ea5499da652565be1497, type: 3}
+  m_Script: {fileID: 11500000, guid: 409f00693694f794cb97cf211cc16f43, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  leftWheels:
+  - {fileID: 74370314}
+  - {fileID: 749222218}
+  rightWheels:
+  - {fileID: 1200207991}
+  - {fileID: 1516555547}
+  acceleration: 100
+  maxSpeed: 10000
 --- !u!54 &1709442306
 Rigidbody:
   m_ObjectHideFlags: 0
