@@ -50,12 +50,22 @@ namespace Assets.Scripts.Robot.Motion {
 			};
 		}
 
-		public void SetActuatorSpeed(float speed) {
+		public bool SetActuatorSpeed(float speed) {
 			this.joint.motor = new JointMotor() {
 				force = speed,
 				freeSpin = false,
 				targetVelocity = speed
 			};
+
+			return true;
+		}
+
+		public bool RotateActuatorTo(float angleInDegrees) {
+			throw new NotImplementedException();
+		}
+
+		public bool RotateActuatorBy(float angleInDegrees) {
+			throw new NotImplementedException();
 		}
 
 	}

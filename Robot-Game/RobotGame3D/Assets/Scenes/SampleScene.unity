@@ -134,6 +134,7 @@ GameObject:
   - component: {fileID: 74370310}
   - component: {fileID: 74370315}
   - component: {fileID: 74370314}
+  - component: {fileID: 74370316}
   m_Layer: 0
   m_Name: Wheel
   m_TagString: Untagged
@@ -265,6 +266,25 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &74370316
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 74370309}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2f0e9de89a1ec1d44b18c373693f81f6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  robotBase: {fileID: 1709442305}
+  joint: {fileID: 74370314}
+  hasRotationLimit: 0
+  rotationMaxLimit: 0
+  rotationMinLimit: 0
+  maxRotationSpeed: 720
+  axis: {x: 0, y: 1, z: 0}
 --- !u!1 &705507993
 GameObject:
   m_ObjectHideFlags: 0
@@ -479,6 +499,7 @@ GameObject:
   - component: {fileID: 749222220}
   - component: {fileID: 749222219}
   - component: {fileID: 749222218}
+  - component: {fileID: 749222224}
   m_Layer: 0
   m_Name: Wheel (1)
   m_TagString: Untagged
@@ -610,6 +631,25 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
+--- !u!114 &749222224
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 749222217}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2f0e9de89a1ec1d44b18c373693f81f6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  robotBase: {fileID: 1709442305}
+  joint: {fileID: 749222218}
+  hasRotationLimit: 0
+  rotationMaxLimit: 0
+  rotationMinLimit: 0
+  maxRotationSpeed: 720
+  axis: {x: 0, y: 1, z: 0}
 --- !u!1 &963194225
 GameObject:
   m_ObjectHideFlags: 0
@@ -707,6 +747,7 @@ GameObject:
   - component: {fileID: 1200207993}
   - component: {fileID: 1200207992}
   - component: {fileID: 1200207991}
+  - component: {fileID: 1200207997}
   m_Layer: 0
   m_Name: Wheel (2)
   m_TagString: Untagged
@@ -838,6 +879,25 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
+--- !u!114 &1200207997
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1200207990}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2f0e9de89a1ec1d44b18c373693f81f6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  robotBase: {fileID: 1709442305}
+  joint: {fileID: 1200207991}
+  hasRotationLimit: 0
+  rotationMaxLimit: 0
+  rotationMinLimit: 0
+  maxRotationSpeed: 720
+  axis: {x: 0, y: 1, z: 0}
 --- !u!1 &1516555546
 GameObject:
   m_ObjectHideFlags: 0
@@ -852,6 +912,7 @@ GameObject:
   - component: {fileID: 1516555549}
   - component: {fileID: 1516555548}
   - component: {fileID: 1516555547}
+  - component: {fileID: 1516555553}
   m_Layer: 0
   m_Name: Wheel (3)
   m_TagString: Untagged
@@ -983,6 +1044,25 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
+--- !u!114 &1516555553
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1516555546}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2f0e9de89a1ec1d44b18c373693f81f6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  robotBase: {fileID: 1709442305}
+  joint: {fileID: 1516555547}
+  hasRotationLimit: 0
+  rotationMaxLimit: 0
+  rotationMinLimit: 0
+  maxRotationSpeed: 720
+  axis: {x: 0, y: 1, z: 0}
 --- !u!1 &1709442299
 GameObject:
   m_ObjectHideFlags: 0
@@ -997,6 +1077,7 @@ GameObject:
   - component: {fileID: 1709442300}
   - component: {fileID: 1709442306}
   - component: {fileID: 1709442304}
+  - component: {fileID: 1709442305}
   m_Layer: 0
   m_Name: RobotBase
   m_TagString: Untagged
@@ -1090,13 +1171,26 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   leftWheels:
-  - {fileID: 74370314}
-  - {fileID: 749222218}
+  - {fileID: 74370316}
+  - {fileID: 749222224}
   rightWheels:
-  - {fileID: 1200207991}
-  - {fileID: 1516555547}
+  - {fileID: 1200207997}
+  - {fileID: 1516555553}
   acceleration: 100
   maxSpeed: 10000
+--- !u!114 &1709442305
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1709442299}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 059dd66cfa1dc6f489cf439a85e5f67b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  managers: []
 --- !u!54 &1709442306
 Rigidbody:
   m_ObjectHideFlags: 0
