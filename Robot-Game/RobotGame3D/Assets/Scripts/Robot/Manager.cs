@@ -15,7 +15,7 @@ namespace Assets.Scripts.Robot {
 		public RobotBase robotBase;
 		
 		private void Awake() {
-			ID = this.robotBase.AddManager(this);
+			//ID = this.robotBase.AddManager(this);
 			this.InitConstraints();
 		}
 

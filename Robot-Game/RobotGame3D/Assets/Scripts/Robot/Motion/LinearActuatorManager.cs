@@ -30,6 +30,10 @@ namespace Assets.Scripts.Robot.Motion {
 		/// </summary>
 		public float extensionSpeed;
 
+		private void Update() {
+			
+		}
+
 		protected override void InitConstraints() {
 			if (this.hasExtensionLimit) {
 				this.joint.linearLimit = new SoftJointLimit() { limit = this.extensionLimit };
@@ -44,26 +48,34 @@ namespace Assets.Scripts.Robot.Motion {
 			this.joint.angularZMotion = ConfigurableJointMotion.Locked;
 			this.joint.targetPosition = Vector3.zero;
 			this.joint.targetVelocity = this.extensionSpeed * this.axis;
+
+			JointDrive drive = new JointDrive() {
+				positionSpring = this.extensionSpeed,
+				maximumForce = this.extensionSpeed
+			};
+			this.joint.xDrive = drive;
+			this.joint.yDrive = drive;
+			this.joint.zDrive = drive;
 		}
 
 		public bool ExtendActuatorTo(float distance) {
 			this.joint.targetPosition = this.joint.axis * distance;
+			//this.joint.targetVelocity = this.extensionSpeed * this.axis;
 			return true;
 		}
 
 		public bool ExtendActuatorBy(float distance) {
 			this.joint.targetPosition += (this.axis * distance);
+			//this.joint.targetVelocity = this.extensionSpeed * this.axis;
 			return true;
 		}
 
 		public bool FullExtendActuator() {
-			this.joint.targetPosition = this.joint.axis * this.extensionLimit;
-			return true;
+			return this.ExtendActuatorTo(this.extensionLimit);
 		}
 
 		public bool FullRetractActuator() {
-			this.joint.targetPosition = Vector3.zero;
-			return true;
+			return this.ExtendActuatorTo(0.0f);
 		}
 
 	}

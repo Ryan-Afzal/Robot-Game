@@ -40,11 +40,11 @@ namespace Assets.Scripts.Robot.Motion {
 			this.joint.xMotion = ConfigurableJointMotion.Locked;
 			this.joint.yMotion = ConfigurableJointMotion.Locked;
 			this.joint.zMotion = ConfigurableJointMotion.Locked;
-			this.joint.angularXMotion = ConfigurableJointMotion.Locked;
-			this.joint.angularYMotion = ConfigurableJointMotion.Locked;
-			this.joint.angularZMotion = ConfigurableJointMotion.Locked;
+			this.joint.angularXMotion = ConfigurableJointMotion.Free;
+			this.joint.angularYMotion = ConfigurableJointMotion.Free;
+			this.joint.angularZMotion = ConfigurableJointMotion.Free;
 
-			//Set rotation drive mode
+			this.joint.rotationDriveMode = RotationDriveMode.Slerp;
 		}
 
 		public bool SetActuatorSpeed(float speed) {

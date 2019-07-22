@@ -11,15 +11,11 @@ namespace Assets.Scripts.Robot {
 		public Manager[] managers;
 
 		private void Awake() {
-			if (this.managers == null) {
-				this.managers = new Manager[0];
-			}
+			
 		}
 
 		private void Start() {
-			foreach (Manager manager in this.managers) {
-				this.AddManager(manager);
-			}
+			
 		}
 
 		private void Update() {
