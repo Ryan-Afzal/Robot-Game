@@ -11,22 +11,39 @@ namespace Assets.Scripts.Robot.Motion {
 	public class LinearActuatorManager : MotionManager<ConfigurableJoint> {
 
 		/// <summary>
-		/// The axis to extend on.
+		/// The axis of extension, relative to this component's <code>Transform</code>
 		/// </summary>
 		public Vector3 axis;
+
+		/// <summary>
+		/// Determines whether there is a limit to how far the actuator can extend.
+		/// </summary>
+		public bool hasExtensionLimit;
 
 		/// <summary>
 		/// The maximum linear distance from the origin point.
 		/// </summary>
 		public float extensionLimit;
 
+		/// <summary>
+		/// The speed at which the actuator extends.
+		/// </summary>
+		public float extensionSpeed;
+
 		protected override void InitConstraints() {
-			this.joint.linearLimit = new SoftJointLimit() { limit = this.extensionLimit };
+			if (this.hasExtensionLimit) {
+				this.joint.linearLimit = new SoftJointLimit() { limit = this.extensionLimit };
+			}
+			
 			this.joint.axis = this.axis;
 			this.joint.xMotion = ConfigurableJointMotion.Limited;
 			this.joint.yMotion = ConfigurableJointMotion.Limited;
 			this.joint.zMotion = ConfigurableJointMotion.Limited;
+			this.joint.angularXMotion = ConfigurableJointMotion.Locked;
+			this.joint.angularYMotion = ConfigurableJointMotion.Locked;
+			this.joint.angularZMotion = ConfigurableJointMotion.Locked;
 			this.joint.targetPosition = Vector3.zero;
+			this.joint.targetVelocity = this.extensionSpeed * this.axis;
 		}
 
 		public bool ExtendActuatorTo(float distance) {

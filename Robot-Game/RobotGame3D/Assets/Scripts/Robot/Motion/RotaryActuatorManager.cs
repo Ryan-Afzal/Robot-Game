@@ -8,7 +8,12 @@ using UnityEngine;
 
 namespace Assets.Scripts.Robot.Motion {
 
-	public class RotaryActuatorManager : MotionManager<HingeJoint> {
+	public class RotaryActuatorManager : MotionManager<ConfigurableJoint> {
+
+		/// <summary>
+		/// The axes of the angle of rotation, relative to this component's <code>Transform</code>
+		/// </summary>
+		public Vector3 axis;
 
 		/// <summary>
 		/// Determines whether there is a limit to how far the actuator can rotate.
@@ -26,46 +31,42 @@ namespace Assets.Scripts.Robot.Motion {
 		public float rotationMinLimit;
 
 		/// <summary>
-		/// The maximum rotation speed.
+		/// The speed of rotation when rotating to a specific angle.
 		/// </summary>
-		public float maxRotationSpeed;
-
-		/// <summary>
-		/// The axes of the angle of rotation, relative to this component's <code>Transform</code>
-		/// </summary>
-		public Vector3 axis;
+		public float rotationSpeed;
 
 		protected override void InitConstraints() {
-			this.joint.axis = axis;
-			this.joint.useLimits = this.hasRotationLimit;
-			this.joint.limits = new JointLimits() {
-				max = this.rotationMaxLimit, 
-				min = this.rotationMinLimit
-			};
-			this.joint.useMotor = true;
-			this.joint.motor = new JointMotor() {
-				force = 0, 
-				freeSpin = false, 
-				targetVelocity = 0
-			};
+			this.joint.axis = this.axis;
+			this.joint.xMotion = ConfigurableJointMotion.Locked;
+			this.joint.yMotion = ConfigurableJointMotion.Locked;
+			this.joint.zMotion = ConfigurableJointMotion.Locked;
+			this.joint.angularXMotion = ConfigurableJointMotion.Locked;
+			this.joint.angularYMotion = ConfigurableJointMotion.Locked;
+			this.joint.angularZMotion = ConfigurableJointMotion.Locked;
+
+			//Set rotation drive mode
 		}
 
 		public bool SetActuatorSpeed(float speed) {
-			this.joint.motor = new JointMotor() {
-				force = speed,
-				freeSpin = false,
-				targetVelocity = speed
-			};
-
+			this.joint.targetAngularVelocity = this.axis * speed;
 			return true;
 		}
 
 		public bool RotateActuatorTo(float angleInDegrees) {
-			throw new NotImplementedException();
+			this.joint.targetRotation = this.GetRotationFromAngle(angleInDegrees);
+			return true;
 		}
 
 		public bool RotateActuatorBy(float angleInDegrees) {
-			throw new NotImplementedException();
+			this.joint.targetRotation *= this.GetRotationFromAngle(angleInDegrees);
+			return true;
+		}
+
+		private Quaternion GetRotationFromAngle(float angleInDegrees) {
+			return Quaternion.Euler(
+				this.axis.x * angleInDegrees, 
+				this.axis.y * angleInDegrees, 
+				this.axis.z * angleInDegrees);
 		}
 
 	}
