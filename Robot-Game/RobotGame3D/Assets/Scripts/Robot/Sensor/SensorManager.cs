@@ -5,16 +5,18 @@ using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
 
-namespace Assets.Scripts.Robot.Motion {
+namespace Assets.Scripts.Robot.Sensor {
 
 	public class SensorManager : Manager {
+
+		public Sensor sensor;
 
 		protected override void InitConstraints() {
 			throw new NotImplementedException();
 		}
 
 		public float[] GetData() {
-			throw new NotImplementedException();
+			return this.sensor.GetData();
 		}
 
 	}

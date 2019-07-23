@@ -15,11 +15,10 @@ namespace Assets.Scripts.Robot {
 		public RobotBase robotBase;
 		
 		private void Awake() {
-			//ID = this.robotBase.AddManager(this);
 			this.InitConstraints();
 		}
 
-		public int ID { get; private set; }
+		public int ID { get; internal set; }
 
 		protected abstract void InitConstraints();
 
