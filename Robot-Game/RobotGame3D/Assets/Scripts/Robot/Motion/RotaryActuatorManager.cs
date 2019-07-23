@@ -8,7 +8,7 @@ using UnityEngine;
 
 namespace Assets.Scripts.Robot.Motion {
 
-	public class RotaryActuatorManager : MotionManager<ConfigurableJoint> {
+	public class RotaryActuatorManager : MotionManager {
 
 		/// <summary>
 		/// The axes of the angle of rotation, relative to this component's <code>Transform</code>
@@ -41,15 +41,31 @@ namespace Assets.Scripts.Robot.Motion {
 			this.joint.yMotion = ConfigurableJointMotion.Locked;
 			this.joint.zMotion = ConfigurableJointMotion.Locked;
 			this.joint.angularXMotion = ConfigurableJointMotion.Free;
-			this.joint.angularYMotion = ConfigurableJointMotion.Free;
-			this.joint.angularZMotion = ConfigurableJointMotion.Free;
+			this.joint.angularYMotion = ConfigurableJointMotion.Locked;
+			this.joint.angularZMotion = ConfigurableJointMotion.Locked;
+			this.joint.rotationDriveMode = RotationDriveMode.XYAndZ;
 
-			this.joint.rotationDriveMode = RotationDriveMode.Slerp;
+			JointDrive drive = new JointDrive() {
+				positionSpring = this.rotationSpeed,
+				positionDamper = this.rotationSpeed,
+				maximumForce = this.rotationSpeed * 2
+			};
+
+			this.joint.angularXDrive = drive;
 		}
 
 		public bool SetActuatorSpeed(float speed) {
-			this.joint.targetAngularVelocity = this.axis * speed;
+			this.joint.targetAngularVelocity = new Vector3(speed, 0, 0);
 			return true;
+		}
+
+		public bool IncreaseActuatorSpeedBy(float speed) {
+			this.joint.targetAngularVelocity += new Vector3(speed, 0, 0);
+			return true;
+		}
+
+		public Vector3 GetActuatorSpeed() {
+			return this.joint.targetAngularVelocity;
 		}
 
 		public bool RotateActuatorTo(float angleInDegrees) {
@@ -63,10 +79,7 @@ namespace Assets.Scripts.Robot.Motion {
 		}
 
 		private Quaternion GetRotationFromAngle(float angleInDegrees) {
-			return Quaternion.Euler(
-				this.axis.x * angleInDegrees, 
-				this.axis.y * angleInDegrees, 
-				this.axis.z * angleInDegrees);
+			return Quaternion.Euler(angleInDegrees, 0.0f, 0.0f);
 		}
 
 	}

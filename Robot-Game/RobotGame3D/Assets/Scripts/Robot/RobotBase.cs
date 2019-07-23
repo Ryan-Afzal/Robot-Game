@@ -27,9 +27,11 @@ namespace Assets.Scripts.Robot {
 				throw new NotImplementedException();
 			} else if (manager is RotaryActuatorManager rotaryActuatorManager) {
 				throw new NotImplementedException();
-			} else /*if (manager is SensorManager sensorManager)*/ {
+			} else if (manager is SensorManager sensorManager) {
 				throw new NotImplementedException();
 			}
+
+			throw new NotImplementedException();
 		}
 
 		private int AddLinearActuatorManager(int managerID, LinearActuatorManager manager) {
@@ -40,11 +42,9 @@ namespace Assets.Scripts.Robot {
 			throw new NotImplementedException();
 		}
 
-		/*
 		private int AddSensorManager(int managerID, SensorManager manager) {
 			throw new NotImplementedException();
 		}
-		 */
 
 	}
 

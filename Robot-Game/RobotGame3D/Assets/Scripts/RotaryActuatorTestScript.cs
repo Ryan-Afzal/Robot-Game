@@ -12,16 +12,16 @@ namespace Assets.Scripts {
 
 		private void Awake() {
 			manager.hasRotationLimit = false;
-			manager.rotationSpeed = 10;
+			manager.rotationSpeed = 1;
 		}
 
 		private void Update() {
 			if (Input.GetKeyDown(KeyCode.LeftArrow)) {
-				manager.RotateActuatorBy(-15);
+				manager.IncreaseActuatorSpeedBy(-15);
 			}
 
 			if (Input.GetKeyDown(KeyCode.RightArrow)) {
-				manager.RotateActuatorBy(15);
+				manager.IncreaseActuatorSpeedBy(15);
 			}
 		}
 
