@@ -52,6 +52,8 @@ namespace Assets.Scripts.Robot.Motion {
 			};
 
 			this.joint.angularXDrive = drive;
+
+			this.joint.angularYZLimitSpring = new SoftJointLimitSpring() { spring = 0 };
 		}
 
 		public bool SetActuatorSpeed(float speed) {

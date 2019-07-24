@@ -16,7 +16,7 @@ namespace Assets.Scripts.Robot {
 		public SensorManager[] sensorManagers;
 
 		private void Awake() {
-
+			
 		}
 
 		private void Start() {

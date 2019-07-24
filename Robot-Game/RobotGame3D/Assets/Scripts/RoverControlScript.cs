@@ -1,21 +1,34 @@
-﻿using Assets.Scripts.Robot.Motion;
+﻿using Assets.Scripts.Robot;
+using Assets.Scripts.Robot.Motion;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 namespace Assets.Scripts {
+	/// <summary>
+	/// A control script using a car-style driving and turn system. 
+	/// All wheels are turned at the same rate, 
+	/// however there are two actuators on the front wheels, 
+	/// which turn the front wheels around their secondary axes.
+	/// </summary>
 	public class RoverControlScript : MonoBehaviour {
 
-		public RotaryActuatorManager[] leftWheels;
-		public RotaryActuatorManager[] rightWheels;
+		public RobotBase robotBase;
+		private Dictionary<string, int> actuatorNamesToIndices = new Dictionary<string, int>() {
+			{ "wheelActuatorFL", 0 }, 
+			{ "wheelActuatorFR", 1 }, 
+			{ "wheelActuatorBL", 2 }, 
+			{ "wheelActuatorBR", 3 }, 
+			{ "turnActuatorFL", 4 }, 
+			{ "turnActuatorFR", 5 }
+		};
+
+		public float maxSpeed;
 
 		private float currentSpeed;
 
-		public float acceleration;
-		public float maxSpeed;
-
 		private void Awake() {
-			
+			this.currentSpeed = 0.0f;
 		}
 
 		private void Start() {
@@ -24,48 +37,40 @@ namespace Assets.Scripts {
 
 		private void Update() {
 			if (Input.GetKey(KeyCode.UpArrow)) {
-				if (Mathf.Abs(this.currentSpeed) < maxSpeed) {
+				if (this.currentSpeed < this.maxSpeed) {
 					this.currentSpeed++;
 				}
-			} else if (Input.GetKey(KeyCode.DownArrow)) {
-				if (Mathf.Abs(this.currentSpeed) < maxSpeed) {
-					this.currentSpeed--;
-				}
-			} else {
-				if (this.currentSpeed < 0) {
-					this.currentSpeed++;
-				} else if (this.currentSpeed > 0) {
+			}
+			
+			if (Input.GetKey(KeyCode.DownArrow)) {
+				if (this.currentSpeed > (-this.maxSpeed)) {
 					this.currentSpeed--;
 				}
 			}
 
-			this.SetActuators(this.currentSpeed);
-		}
+			if (Input.GetKey(KeyCode.Space)) {
+				this.currentSpeed = 0.0f;
+			}
 
-		private void SetActuators(float speed) {
-			float speedL = speed;
-			float speedR = speed;
+			this.robotBase.rotaryActuatorManagers[this.actuatorNamesToIndices["wheelActuatorFL"]].SetActuatorSpeed(this.currentSpeed);
+			this.robotBase.rotaryActuatorManagers[this.actuatorNamesToIndices["wheelActuatorFR"]].SetActuatorSpeed(this.currentSpeed);
+			this.robotBase.rotaryActuatorManagers[this.actuatorNamesToIndices["wheelActuatorBL"]].SetActuatorSpeed(this.currentSpeed);
+			this.robotBase.rotaryActuatorManagers[this.actuatorNamesToIndices["wheelActuatorBR"]].SetActuatorSpeed(this.currentSpeed);
+
+			float targetTurnRotation = 0.0f;
 
 			if (Input.GetKey(KeyCode.LeftArrow)) {
-				speedR *= 0.50f;
-			} else if (Input.GetKey(KeyCode.RightArrow)) {
-				speedL *= 0.50f;
+				targetTurnRotation = 45.0f;
 			}
 
-			this.SetLActuators(speedL);
-			this.SetRActuators(speedR);
+			if (Input.GetKey(KeyCode.RightArrow)) {
+				targetTurnRotation = -45.0f;
+			}
+
+			this.robotBase.rotaryActuatorManagers[this.actuatorNamesToIndices["turnActuatorFL"]].RotateActuatorTo(targetTurnRotation);
+			this.robotBase.rotaryActuatorManagers[this.actuatorNamesToIndices["turnActuatorFR"]].RotateActuatorTo(targetTurnRotation);
 		}
 
-		private void SetLActuators(float speed) {
-			foreach (var j in leftWheels) {
-				j.SetActuatorSpeed(speed);
-			}
-		}
 
-		private void SetRActuators(float speed) {
-			foreach (var j in rightWheels) {
-				j.SetActuatorSpeed(speed);
-			}
-		}
 	}
 }

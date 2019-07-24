@@ -55,12 +55,12 @@ namespace Assets.Scripts.Robot.Motion {
 		}
 
 		public bool ExtendActuatorTo(float distance) {
-			this.joint.targetPosition = new Vector3(1, 0, 0) * distance;
+			this.joint.targetPosition = new Vector3(distance, 0, 0);
 			return true;
 		}
 
 		public bool ExtendActuatorBy(float distance) {
-			this.joint.targetPosition += new Vector3(1, 0, 0) * distance;
+			this.joint.targetPosition += new Vector3(distance, 0, 0);
 			return true;
 		}
 
