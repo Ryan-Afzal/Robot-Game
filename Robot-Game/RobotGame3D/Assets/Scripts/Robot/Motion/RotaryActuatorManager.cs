@@ -58,11 +58,22 @@ namespace Assets.Scripts.Robot.Motion {
 
 		public bool SetActuatorSpeed(float speed) {
 			this.joint.targetAngularVelocity = new Vector3(speed, 0, 0);
+			float d = Mathf.Abs(this.joint.targetAngularVelocity.x - GetComponent<Rigidbody>().angularVelocity.x);
+			this.joint.angularXDrive = new JointDrive() {
+				positionSpring = d,
+				positionDamper = d,
+				maximumForce = d * 2
+			};
 			return true;
 		}
 
 		public bool IncreaseActuatorSpeedBy(float speed) {
 			this.joint.targetAngularVelocity += new Vector3(speed, 0, 0);
+			this.joint.angularXDrive = new JointDrive() {
+				positionSpring = this.joint.angularXDrive.positionSpring + speed,
+				positionDamper = this.joint.angularXDrive.positionDamper + speed,
+				maximumForce = this.joint.angularXDrive.maximumForce + speed * 2
+			};
 			return true;
 		}
 
@@ -72,11 +83,21 @@ namespace Assets.Scripts.Robot.Motion {
 
 		public bool RotateActuatorTo(float angleInDegrees) {
 			this.joint.targetRotation = this.GetRotationFromAngle(angleInDegrees);
+			this.joint.angularXDrive = new JointDrive() {
+				positionSpring = this.rotationSpeed,
+				positionDamper = this.rotationSpeed,
+				maximumForce = this.rotationSpeed * 2
+			};
 			return true;
 		}
 
 		public bool RotateActuatorBy(float angleInDegrees) {
 			this.joint.targetRotation *= this.GetRotationFromAngle(angleInDegrees);
+			this.joint.angularXDrive = new JointDrive() {
+				positionSpring = this.rotationSpeed,
+				positionDamper = this.rotationSpeed,
+				maximumForce = this.rotationSpeed * 2
+			};
 			return true;
 		}
 

@@ -36,19 +36,19 @@ namespace Assets.Scripts {
 		}
 
 		private void Update() {
-			if (Input.GetKey(KeyCode.UpArrow)) {
+			if (Input.GetKeyDown(KeyCode.UpArrow)) {
 				if (this.currentSpeed < this.maxSpeed) {
 					this.currentSpeed++;
 				}
 			}
 			
-			if (Input.GetKey(KeyCode.DownArrow)) {
+			if (Input.GetKeyDown(KeyCode.DownArrow)) {
 				if (this.currentSpeed > (-this.maxSpeed)) {
 					this.currentSpeed--;
 				}
 			}
 
-			if (Input.GetKey(KeyCode.Space)) {
+			if (Input.GetKeyDown(KeyCode.Space)) {
 				this.currentSpeed = 0.0f;
 			}
 
