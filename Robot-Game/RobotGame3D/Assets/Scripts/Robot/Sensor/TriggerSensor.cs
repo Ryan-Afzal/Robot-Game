@@ -7,15 +7,14 @@ using UnityEngine;
 
 namespace Assets.Scripts.Robot.Sensor {
 
-	public class SensorManager : Manager {
+	public abstract class TriggerSensor : Sensor {
 
-		public Sensor sensor;
+		public event Action<float[]> onTrigger; 
 
-		protected override void InitConstraints() {	}
-
-		public float[] GetData() {
-			return this.sensor.GetData();
+		protected void Trigger() {
+			this.onTrigger?.Invoke(this.GetData());
 		}
 
 	}
+
 }

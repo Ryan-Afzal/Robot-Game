@@ -45,14 +45,6 @@ namespace Assets.Scripts.Robot.Motion {
 			this.joint.angularZMotion = ConfigurableJointMotion.Locked;
 			this.joint.rotationDriveMode = RotationDriveMode.XYAndZ;
 
-			JointDrive drive = new JointDrive() {
-				positionSpring = this.rotationSpeed,
-				positionDamper = this.rotationSpeed,
-				maximumForce = this.rotationSpeed * 2
-			};
-
-			this.joint.angularXDrive = drive;
-
 			this.joint.angularYZLimitSpring = new SoftJointLimitSpring() { spring = 1, damper = 1 };
 		}
 

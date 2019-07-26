@@ -9,15 +9,15 @@ namespace Assets.Scripts.Robot.Sensor {
 
 	public abstract class Sensor : MonoBehaviour {
 
-		protected void Awake() {
+		protected virtual void Awake() {
 
 		}
 
-		protected void Start() {
+		protected virtual void Start() {
 			
 		}
 
-		protected void Update() {
+		protected virtual void Update() {
 			
 		}
 
