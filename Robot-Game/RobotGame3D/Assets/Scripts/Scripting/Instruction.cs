@@ -11,13 +11,22 @@ namespace Assets.Scripts.Scripting {
 
 	}
 
-	public abstract class Instruction<T> {
+	public abstract class Instruction {
 
-		public Instruction() {
-
+		protected struct Arg {
+			public Instruction Instruction { get; set; }
+			public Type Type { get; set; }
 		}
 
-		public abstract T Execute(InstructionExecutionArgs args);
+		protected readonly Arg[] args;
+
+		protected Instruction(Arg[] args) {
+			this.args = args;
+		}
+
+		public abstract object Execute(InstructionExecutionArgs args);
+
+		public abstract Type GetReturnType();
 
 	}
 
