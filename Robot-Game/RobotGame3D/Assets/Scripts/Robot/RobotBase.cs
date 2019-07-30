@@ -1,5 +1,6 @@
 ﻿using Assets.Scripts.Robot.Motion;
 using Assets.Scripts.Robot.Sensor;
+using Assets.Scripts.Scripting;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -35,6 +36,13 @@ namespace Assets.Scripts.Robot {
 
 		private void Update() {
 			
+		}
+
+		public void ExecuteInstructionSet(InstructionSet set) {
+			IEnumerator coroutine = set.ExecuteInstructions(new InstructionExecutionArgs() {
+				RobotBase = this
+			});
+			StartCoroutine(coroutine);
 		}
 
 	}
