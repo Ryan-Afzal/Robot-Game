@@ -14,13 +14,18 @@ namespace Assets.Scripts {
 	public class RoverControlScript : MonoBehaviour {
 
 		public RobotBase robotBase;
-		private Dictionary<string, int> actuatorNamesToIndices = new Dictionary<string, int>() {
+
+		private readonly Dictionary<string, int> rotaryActuatorNamesToIndices = new Dictionary<string, int>() {
 			{ "wheelActuatorFL", 0 }, 
 			{ "wheelActuatorFR", 1 }, 
 			{ "wheelActuatorBL", 2 }, 
 			{ "wheelActuatorBR", 3 }, 
 			{ "turnActuatorFL", 4 }, 
 			{ "turnActuatorFR", 5 }
+		};
+
+		private readonly Dictionary<string, int> linearActuatorNamesToIndices = new Dictionary<string, int>() {
+			{ "pushPlateActuator", 0 }
 		};
 
 		public float maxSpeed;
@@ -52,10 +57,10 @@ namespace Assets.Scripts {
 				this.currentSpeed = 0.0f;
 			}
 
-			this.robotBase.rotaryActuatorManagers[this.actuatorNamesToIndices["wheelActuatorFL"]].SetActuatorSpeed(this.currentSpeed);
-			this.robotBase.rotaryActuatorManagers[this.actuatorNamesToIndices["wheelActuatorFR"]].SetActuatorSpeed(this.currentSpeed);
-			this.robotBase.rotaryActuatorManagers[this.actuatorNamesToIndices["wheelActuatorBL"]].SetActuatorSpeed(this.currentSpeed);
-			this.robotBase.rotaryActuatorManagers[this.actuatorNamesToIndices["wheelActuatorBR"]].SetActuatorSpeed(this.currentSpeed);
+			this.robotBase.rotaryActuatorManagers[this.rotaryActuatorNamesToIndices["wheelActuatorFL"]].SetActuatorSpeed(this.currentSpeed);
+			this.robotBase.rotaryActuatorManagers[this.rotaryActuatorNamesToIndices["wheelActuatorFR"]].SetActuatorSpeed(this.currentSpeed);
+			this.robotBase.rotaryActuatorManagers[this.rotaryActuatorNamesToIndices["wheelActuatorBL"]].SetActuatorSpeed(this.currentSpeed);
+			this.robotBase.rotaryActuatorManagers[this.rotaryActuatorNamesToIndices["wheelActuatorBR"]].SetActuatorSpeed(this.currentSpeed);
 
 			float targetTurnRotation = 0.0f;
 
@@ -67,8 +72,16 @@ namespace Assets.Scripts {
 				targetTurnRotation = -45.0f;
 			}
 
-			this.robotBase.rotaryActuatorManagers[this.actuatorNamesToIndices["turnActuatorFL"]].RotateActuatorTo(targetTurnRotation);
-			this.robotBase.rotaryActuatorManagers[this.actuatorNamesToIndices["turnActuatorFR"]].RotateActuatorTo(targetTurnRotation);
+			this.robotBase.rotaryActuatorManagers[this.rotaryActuatorNamesToIndices["turnActuatorFL"]].RotateActuatorTo(targetTurnRotation);
+			this.robotBase.rotaryActuatorManagers[this.rotaryActuatorNamesToIndices["turnActuatorFR"]].RotateActuatorTo(targetTurnRotation);
+
+			if (Input.GetKeyDown(KeyCode.A)) {
+				this.robotBase.linearActuatorManagers[this.linearActuatorNamesToIndices["pushPlateActuator"]].FullExtendActuator();
+			}
+
+			if (Input.GetKeyDown(KeyCode.S)) {
+				this.robotBase.linearActuatorManagers[this.linearActuatorNamesToIndices["pushPlateActuator"]].FullRetractActuator();
+			}
 		}
 
 

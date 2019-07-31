@@ -38,11 +38,17 @@ namespace Assets.Scripts.Robot {
 			
 		}
 
-		public void ExecuteInstructionSet(InstructionSet set) {
+		public bool ExecuteInstructionSet(InstructionSet set) {
+			if (set.IsRunning) {
+				return false;
+			}
+
 			IEnumerator coroutine = set.ExecuteInstructions(new InstructionExecutionArgs() {
 				RobotBase = this
 			});
 			StartCoroutine(coroutine);
+
+			return true;
 		}
 
 	}

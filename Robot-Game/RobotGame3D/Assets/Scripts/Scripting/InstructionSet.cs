@@ -12,8 +12,9 @@ namespace Assets.Scripts.Scripting {
 
 		private readonly Instruction[] instructions;
 
-		public InstructionSet(Instruction[] instructions) {
+		public InstructionSet(Instruction[] instructions, bool canMultiRun) {
 			this.instructions = instructions;
+			CanMultiRun = canMultiRun;
 		}
 
 		public int NumInstructions {
@@ -22,11 +23,20 @@ namespace Assets.Scripts.Scripting {
 			}
 		}
 
+		public bool CanMultiRun { get; private set; }
+		public bool IsRunning { get; private set; }
+
 		public IEnumerator ExecuteInstructions(InstructionExecutionArgs args) {
+			if (!CanMultiRun) {
+				IsRunning = true;
+			}
+
 			for (int i = 0; i < NumInstructions; i++) {
 				this.instructions[i].Execute(args);
 				yield return null;
 			}
+
+			IsRunning = false;
 		}
 
 	}
