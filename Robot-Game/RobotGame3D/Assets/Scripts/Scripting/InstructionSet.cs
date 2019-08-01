@@ -8,11 +8,11 @@ using UnityEngine;
 
 namespace Assets.Scripts.Scripting {
 
-	public class InstructionSet {
+	public sealed class InstructionSet {
 
-		private readonly Instruction[] instructions;
+		private readonly StandaloneInstruction[] instructions;
 
-		public InstructionSet(Instruction[] instructions, bool canMultiRun) {
+		public InstructionSet(StandaloneInstruction[] instructions, bool canMultiRun) {
 			this.instructions = instructions;
 			CanMultiRun = canMultiRun;
 		}

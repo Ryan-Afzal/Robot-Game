@@ -7,18 +7,25 @@ namespace Assets.Scripts.Scripting {
 
 	public abstract class Instruction {
 
-		protected struct Arg {
-			public Instruction Instruction { get; set; }
-			public Type Type { get; set; }
-		}
+		protected readonly Type[] argTypes;
+		protected readonly ArgInstruction[] args;
 
-		protected readonly Arg[] args;
-
-		protected Instruction(Arg[] args) {
+		protected Instruction(Type[] argTypes, ArgInstruction[] args) {
+			this.argTypes = argTypes;
 			this.args = args;
+
+			if (this.argTypes.Length != this.args.Length) {
+				throw new ArgumentException();
+			} else {
+				for (int i = 0; i < this.args.Length; i++) {
+					if (!this.args[i].GetReturnType().Equals(this.argTypes[i])) {
+						throw new ArgumentException();
+					}
+				}
+			}
 		}
 
-		public abstract object Execute(InstructionExecutionArgs args);
+		public abstract IEnumerator<object> Execute(InstructionExecutionArgs args);
 
 		public abstract Type GetReturnType();
 
