@@ -19,10 +19,6 @@ namespace Assets.Scripts.Scripting {
 			yield return true;
 		}
 
-		public override Type GetReturnType() {
-			return typeof(bool);
-		}
-
 		protected abstract void BeginExecution(InstructionExecutionArgs args);
 
 		protected abstract bool IsExecutionFinished(InstructionExecutionArgs args);

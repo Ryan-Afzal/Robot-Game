@@ -16,6 +16,8 @@ namespace Assets.Scripts.Scripting {
 
 		protected abstract object GetValue(InstructionExecutionArgs args);
 
+		public abstract Type GetReturnType();
+
 	}
 
 }

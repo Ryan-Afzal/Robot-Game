@@ -27,8 +27,6 @@ namespace Assets.Scripts.Scripting {
 
 		public abstract IEnumerator<object> Execute(InstructionExecutionArgs args);
 
-		public abstract Type GetReturnType();
-
 	}
 
 }
