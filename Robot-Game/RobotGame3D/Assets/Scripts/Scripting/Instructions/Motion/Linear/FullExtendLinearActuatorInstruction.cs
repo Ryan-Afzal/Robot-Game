@@ -8,12 +8,14 @@ namespace Assets.Scripts.Scripting {
 
 	public sealed class FullExtendLinearActuatorInstruction : StandaloneInstruction {
 
-		public FullExtendLinearActuatorInstruction() : base(new Type[0], new ArgInstruction[0]) {
-
+		public FullExtendLinearActuatorInstruction(ArgInstruction[] args) : base(args) {
+			if (!args[0].GetReturnType().Equals(typeof(int))) {
+				throw new ArgumentException();
+			}
 		}
 
 		protected override void BeginExecution(InstructionExecutionArgs args) {
-			throw new NotImplementedException();
+			args.RobotBase.linearActuatorManagers[(int)this.args[0].Execute(args).Current].FullExtendActuator();
 		}
 
 		protected override bool IsExecutionFinished(InstructionExecutionArgs args) {

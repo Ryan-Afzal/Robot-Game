@@ -10,30 +10,25 @@ namespace Assets.Scripts.Scripting {
 
 	public sealed class InstructionSet {
 
-		private readonly StandaloneInstruction[] instructions;
+		private readonly StandaloneInstruction root;
 
-		public InstructionSet(StandaloneInstruction[] instructions, bool canMultiRun) {
-			this.instructions = instructions;
-			CanMultiRun = canMultiRun;
+		public InstructionSet(StandaloneInstruction root) {
+			this.root = root;
 		}
 
-		public int NumInstructions {
-			get {
-				return this.instructions.Length;
-			}
-		}
-
-		public bool CanMultiRun { get; private set; }
 		public bool IsRunning { get; private set; }
 
 		public IEnumerator ExecuteInstructions(InstructionExecutionArgs args) {
-			if (!CanMultiRun) {
-				IsRunning = true;
+			if (IsRunning) {
+				yield break;
 			}
 
-			for (int i = 0; i < NumInstructions; i++) {
-				this.instructions[i].Execute(args);
-				yield return null;
+			IsRunning = true;
+
+			StandaloneInstruction instruction = this.root;
+			while (instruction != null) {
+				yield return instruction.Execute(args);
+				instruction = instruction.Next;
 			}
 
 			IsRunning = false;

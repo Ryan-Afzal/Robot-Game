@@ -7,7 +7,21 @@ namespace Assets.Scripts.Scripting {
 
 	public abstract class StandaloneInstruction : Instruction {
 		
-		protected StandaloneInstruction(Type[] argTypes, ArgInstruction[] args) : base(argTypes, args) { }
+		protected StandaloneInstruction(ArgInstruction[] args) : base(args) {
+
+		}
+
+		protected StandaloneInstruction() : this(new ArgInstruction[0]) { }
+
+		public StandaloneInstruction Next { get; private set; }
+
+		protected void Attach(StandaloneInstruction instruction) {
+			if (Next == null) {
+				Next = instruction;
+			} else {
+				throw new NotSupportedException("An instruction is already connected to this instruction.");
+			}
+		}
 
 		public override IEnumerator<object> Execute(InstructionExecutionArgs args) {
 			this.BeginExecution(args);
@@ -16,7 +30,7 @@ namespace Assets.Scripts.Scripting {
 				yield return null;
 			}
 			
-			yield return true;
+			yield break;
 		}
 
 		protected abstract void BeginExecution(InstructionExecutionArgs args);

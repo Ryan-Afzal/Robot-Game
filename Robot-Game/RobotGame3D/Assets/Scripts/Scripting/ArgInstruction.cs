@@ -8,7 +8,7 @@ namespace Assets.Scripts.Scripting {
 
 	public abstract class ArgInstruction : Instruction {
 
-		protected ArgInstruction(Type[] argTypes, ArgInstruction[] args) : base(argTypes, args) { }
+		protected ArgInstruction(ArgInstruction[] args) : base(args) { }
 
 		public override IEnumerator<object> Execute(InstructionExecutionArgs args) {
 			yield return this.GetValue(args);
