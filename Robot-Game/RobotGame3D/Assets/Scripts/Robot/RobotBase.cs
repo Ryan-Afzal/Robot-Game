@@ -43,9 +43,7 @@ namespace Assets.Scripts.Robot {
 				return false;
 			}
 
-			IEnumerator coroutine = set.ExecuteInstructions(new InstructionExecutionArgs() {
-				RobotBase = this
-			});
+			IEnumerator coroutine = set.ExecuteInstructions(new InstructionExecutionArgs(this));
 			StartCoroutine(coroutine);
 
 			return true;

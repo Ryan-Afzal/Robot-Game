@@ -48,6 +48,18 @@ namespace Assets.Scripts.Robot.Motion {
 			this.joint.angularYZLimitSpring = new SoftJointLimitSpring() { spring = 1, damper = 1 };
 		}
 
+		public Quaternion RelativeRotation {
+			get {
+				return this.joint.transform.localRotation;
+			}
+		}
+
+		public Vector3 RelativeAngularVelocity {
+			get {
+				return this.GetComponent<Rigidbody>().angularVelocity;
+			}
+		}
+
 		public bool SetActuatorSpeed(float speed) {
 			this.joint.targetAngularVelocity = new Vector3(speed, 0, 0);
 			float d = Mathf.Abs(this.joint.targetAngularVelocity.x - GetComponent<Rigidbody>().angularVelocity.x);

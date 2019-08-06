@@ -1,5 +1,6 @@
 ﻿using Assets.Scripts.Robot;
 using Assets.Scripts.Robot.Motion;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -76,7 +77,8 @@ namespace Assets.Scripts {
 			this.robotBase.rotaryActuatorManagers[this.rotaryActuatorNamesToIndices["turnActuatorFR"]].RotateActuatorTo(targetTurnRotation);
 
 			if (Input.GetKeyDown(KeyCode.A)) {
-				this.robotBase.linearActuatorManagers[this.linearActuatorNamesToIndices["pushPlateActuator"]].FullExtendActuator();
+				int index = this.linearActuatorNamesToIndices["pushPlateActuator"];
+				throw new NotImplementedException();
 			}
 
 			if (Input.GetKeyDown(KeyCode.S)) {

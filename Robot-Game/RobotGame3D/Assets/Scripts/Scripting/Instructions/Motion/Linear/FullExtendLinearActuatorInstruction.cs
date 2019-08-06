@@ -1,4 +1,5 @@
 ﻿using Assets.Scripts.Robot;
+using Assets.Scripts.Robot.Motion;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -8,6 +9,8 @@ namespace Assets.Scripts.Scripting {
 
 	public sealed class FullExtendLinearActuatorInstruction : StandaloneInstruction {
 
+		private LinearActuatorManager actuator;
+
 		public FullExtendLinearActuatorInstruction(ArgInstruction[] args) : base(args) {
 			if (!args[0].GetReturnType().Equals(typeof(int))) {
 				throw new ArgumentException();
@@ -15,11 +18,12 @@ namespace Assets.Scripts.Scripting {
 		}
 
 		protected override void BeginExecution(InstructionExecutionArgs args) {
-			args.RobotBase.linearActuatorManagers[(int)this.args[0].Execute(args).Current].FullExtendActuator();
+			this.actuator = args.RobotBase.linearActuatorManagers[(int)this.args[0].Execute(args).Current];
+			this.actuator.FullExtendActuator();
 		}
 
 		protected override bool IsExecutionFinished(InstructionExecutionArgs args) {
-			throw new NotImplementedException();
+			return this.actuator.RelativePosition.magnitude > this.actuator.precisionTolerance;
 		}
 	}
 

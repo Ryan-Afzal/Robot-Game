@@ -30,6 +30,11 @@ namespace Assets.Scripts.Robot.Motion {
 		/// </summary>
 		public float extensionSpeed;
 
+		/// <summary>
+		/// The level of precision before a movement can be considered complete.
+		/// </summary>
+		public float precisionTolerance;
+
 		protected override void InitConstraints() {
 			if (this.hasExtensionLimit) {
 				this.joint.linearLimit = new SoftJointLimit() { limit = this.extensionLimit };
@@ -52,6 +57,12 @@ namespace Assets.Scripts.Robot.Motion {
 			this.joint.xDrive = drive;
 			this.joint.yDrive = drive;
 			this.joint.zDrive = drive;
+		}
+
+		public Vector3 RelativePosition {
+			get {
+				return this.joint.transform.localPosition;
+			}
 		}
 
 		public bool ExtendActuatorTo(float distance) {
