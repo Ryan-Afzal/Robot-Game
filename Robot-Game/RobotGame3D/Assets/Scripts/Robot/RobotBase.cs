@@ -42,10 +42,10 @@ namespace Assets.Scripts.Robot {
 			if (set.IsRunning) {
 				return false;
 			}
-
+			
 			IEnumerator coroutine = set.ExecuteInstructions(new InstructionExecutionArgs(this));
 			StartCoroutine(coroutine);
-
+			
 			return true;
 		}
 

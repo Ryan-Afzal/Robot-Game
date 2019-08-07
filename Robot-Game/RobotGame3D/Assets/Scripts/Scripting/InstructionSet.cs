@@ -8,31 +8,9 @@ using UnityEngine;
 
 namespace Assets.Scripts.Scripting {
 
-	public sealed class InstructionSet {
+	public sealed class InstructionSet : MonoBehaviour {
 
-		private readonly StandaloneInstruction root;
-
-		public InstructionSet(StandaloneInstruction root) {
-			this.root = root;
-		}
-
-		public bool IsRunning { get; private set; }
-
-		public IEnumerator ExecuteInstructions(InstructionExecutionArgs args) {
-			if (IsRunning) {
-				yield break;
-			}
-
-			IsRunning = true;
-
-			StandaloneInstruction instruction = this.root;
-			while (instruction != null) {
-				yield return instruction.Execute(args);
-				instruction = instruction.Next;
-			}
-
-			IsRunning = false;
-		}
+		
 
 	}
 

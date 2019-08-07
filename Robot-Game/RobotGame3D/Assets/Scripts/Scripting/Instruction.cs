@@ -2,18 +2,25 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine;
 
 namespace Assets.Scripts.Scripting {
 
-	public abstract class Instruction {
+	public abstract class Instruction : MonoBehaviour {
 
-		protected readonly ArgInstruction[] args;
+		//string array is [socket array + 1]
 
-		protected Instruction(ArgInstruction[] args) {
-			this.args = args;
+		protected virtual void Awake() {
+
 		}
 
-		public abstract IEnumerator<object> Execute(InstructionExecutionArgs args);
+		protected virtual void Start() {
+
+		}
+
+		protected virtual void Update() {
+
+		}
 
 	}
 
