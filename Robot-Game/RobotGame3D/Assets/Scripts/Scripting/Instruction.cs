@@ -53,16 +53,28 @@ namespace Assets.Scripts.Scripting {
 		private object[] textWithArgs;
 
 		protected virtual void Awake() {
-			int i_ = -1;
+			int i_ = -1;//Position of last '$'
+			int t = 0;//Index in textWithArgs
 			for (int i = 0; i < textInputString.Length; i++) {
 				if (textInputString[i] == '$') {
 					if (i_ == -1) {
-						
+						i_ = i;
 					} else {
-
+						
+						i_ = -1;
 					}
+
+					t++;
+				} else if (i_ == -1) {
+					if (textWithArgs[t] == null) {
+						textWithArgs[t] = "";
+					}
+
+					textWithArgs[t] = ((string)textWithArgs[t]) + textInputString[i];
 				}
 			}
+
+			throw new NotImplementedException();
 		}
 
 		protected virtual void Start() {

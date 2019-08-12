@@ -8,17 +8,17 @@ using UnityEngine;
 
 namespace Assets.Scripts.Scripting {
 
-	public abstract class StandaloneInstruction : Instruction {
+	public abstract class NestedInstructionInstruction : StandaloneInstruction {
 
-		private DroppableArea next;
+		public int numInstructions;
 
-
+		private StandaloneInstruction[] instructions;
 
 		protected override void Awake() {
 			base.Awake();
-		}
 
-		public abstract IEnumerator Execute(InstructionExecutionArgs args);
+			this.instructions = new StandaloneInstruction[this.numInstructions];
+		}
 
 	}
 }
