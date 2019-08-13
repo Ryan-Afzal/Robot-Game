@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace Assets.Scripts.Scripting {
 
-	public abstract class Instruction : MonoBehaviour {
+	public abstract class Instruction<T> : Draggable<T> {
 
 		public sealed class ArgSocket {
 
@@ -52,7 +52,10 @@ namespace Assets.Scripts.Scripting {
 
 		private object[] textWithArgs;
 
-		protected virtual void Awake() {
+		protected override void Awake() {
+			base.Awake();
+
+			/*
 			int i_ = -1;//Position of last '$'
 			int t = 0;//Index in textWithArgs
 			for (int i = 0; i < textInputString.Length; i++) {
@@ -75,14 +78,16 @@ namespace Assets.Scripts.Scripting {
 			}
 
 			throw new NotImplementedException();
+			*/
+
 		}
 
-		protected virtual void Start() {
-			
+		protected override void Start() {
+			base.Start();
 		}
 
-		protected virtual void Update() {
-
+		protected override void Update() {
+			base.Update();
 		}
 
 	}

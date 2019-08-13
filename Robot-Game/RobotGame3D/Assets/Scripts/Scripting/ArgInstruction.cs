@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Assets.Scripts.Scripting {
 
-	public abstract class ArgInstruction : Instruction {
+	public abstract class ArgInstruction : Instruction<object> {
 
 		public abstract Type GetOutputType();
 

@@ -8,7 +8,7 @@ using UnityEngine;
 
 namespace Assets.Scripts.Scripting {
 
-	public abstract class NestedInstructionInstruction : StandaloneInstruction {
+	public abstract class NestedInstruction : StandaloneInstruction {
 
 		public int numInstructions;
 
