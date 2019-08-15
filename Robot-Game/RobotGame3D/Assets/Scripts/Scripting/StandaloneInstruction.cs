@@ -24,8 +24,13 @@ namespace Assets.Scripts.Scripting {
 		protected virtual void OnGUI() {
 			GUI.Box(new Rect(transform.position, new Vector2(100, 50)), Name);
 		}
-		
-		protected override void OnDropSucceeded(StandaloneInstruction recipient) {
+
+		protected override void OnDrag() {
+			Previous.Next = null;
+			Previous = null;
+		}
+
+		protected override void OnDrop(StandaloneInstruction recipient) {
 			recipient.Next = this;
 			Previous = recipient;
 

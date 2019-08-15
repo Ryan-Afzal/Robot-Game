@@ -8,19 +8,15 @@ namespace Assets.Scripts.Scripting {
 
 	public abstract class Draggable<T> : MonoBehaviour, IDropHandler, IDragHandler, IEndDragHandler, IPointerClickHandler, IPointerDownHandler {
 
-		private Vector3 startPosition;
-		private Vector3 diffPosition;
-
-		public GameObject canvas;
-
 		public void OnDrop(PointerEventData eventData) {
-			
+			Debug.Log("Drop");
 		}
 
-		protected abstract void OnDropSucceeded(T recipient); 
+		protected abstract void OnDrag();
+		protected abstract void OnDrop(T recipient); 
 
 		public void OnDrag(PointerEventData eventData) {
-			transform.position = Input.mousePosition - diffPosition;
+			Debug.Log("Drag");
 		}
 
 		public void OnEndDrag(PointerEventData eventData) {
@@ -32,12 +28,7 @@ namespace Assets.Scripts.Scripting {
 		}
 
 		public void OnPointerDown(PointerEventData eventData) {
-			//this.startPosition = transform.position;
-			//this.diffPosition = Input.mousePosition - startPosition;
-			//EventSystem.current.SetSelectedGameObject(gameObject);
-			//EventSystem.current.currentSelectedGameObject.transform.SetParent(this.canvas.transform);
-			//EventSystem.current.currentSelectedGameObject.transform.SetAsFirstSibling();
-			Debug.Log("start drag " + gameObject.name);
+			Debug.Log("PointerDown");
 		}
 
 		protected virtual void Awake() {
