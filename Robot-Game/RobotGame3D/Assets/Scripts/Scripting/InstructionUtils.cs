@@ -14,7 +14,7 @@ namespace Assets.Scripts.Scripting {
 		/// </summary>
 		/// <param name="instruction">The instruction to execute.</param>
 		/// <returns>Returns true when the execution is finished, and false otherwise.</returns>
-		public static IEnumerator Execute(this IInstruction instruction) {
+		public static IEnumerator ExecuteAsCoroutine(this IInstruction instruction) {
 			foreach (var result in instruction.Execute()) {
 				yield return result;
 			}
@@ -43,14 +43,14 @@ namespace Assets.Scripts.Scripting {
 		/// <param name="arg">The provided argument.</param>
 		/// <param name="result">A callback to pass the returned result to.</param>
 		/// <returns></returns>
-		public static IEnumerable Execute(this IArgInstruction arg, Action<object> result) {
+		public static IEnumerable Execute<T>(this IArgInstruction arg, Action<T> result) {
 			arg.Begin();
 
 			while (!arg.Update()) {
 				yield return null;
 			}
 
-			result(arg.End());
+			result((T)arg.End());
 		}
 
 	}

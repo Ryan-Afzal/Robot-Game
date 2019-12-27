@@ -15,7 +15,7 @@ namespace Assets.Scripts.Scripting.Compiled {
 		/// </summary>
 		private readonly IInstruction[] instructions;
 
-		protected NestedInstruction(IInstruction[] instructions) {
+		protected NestedInstruction(IInstruction[] instructions, IArgInstruction[] args) : base(args) {
 			this.instructions = instructions;
 		}
 

@@ -10,7 +10,7 @@ namespace Assets.Scripts.Scripting.Compiled {
 
 		protected readonly IArgInstruction[] args;
 
-		protected Instruction(params IArgInstruction[] args) {
+		protected Instruction(IArgInstruction[] args) {
 			this.args = args;
 		}
 
