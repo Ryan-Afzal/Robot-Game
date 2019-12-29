@@ -5,16 +5,16 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace Assets.Scripts.Scripting.Compiled.Instructions {
-	public class LiteralBoolArgInstruction : IArgInstruction {
+	public class LiteralArgInstruction : IArgInstruction {
 
-		private readonly bool value;
+		private readonly object value;
 
-		public LiteralBoolArgInstruction(bool value) {
+		public LiteralArgInstruction(object value) {
 			this.value = value;
 		}
 
 		public async Task<object> Execute(InstructionExecutionArgs args) {
-			return await Task.FromResult(this.value as object);
+			return await Task.FromResult(this.value);
 		}
 	}
 }

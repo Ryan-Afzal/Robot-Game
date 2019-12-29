@@ -1,5 +1,7 @@
 ﻿using Assets.Scripts.Robot;
 using Assets.Scripts.Robot.Motion;
+using Assets.Scripts.Scripting.Compiled;
+using Assets.Scripts.Scripting.Compiled.Instructions;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -37,8 +39,13 @@ namespace Assets.Scripts {
 			this.currentSpeed = 0.0f;
 		}
 
-		private void Start() {
-			
+		private async void Start() {
+			IInstruction instruction = new IfInstruction(
+				new IInstruction[] { new RotaryActuatorSetSpeedInstruction(new IArgInstruction[] { new LiteralArgInstruction(0), new LiteralArgInstruction(10f) }) }, 
+				new IArgInstruction[] { new LiteralArgInstruction(false) }
+				);
+
+			await instruction.Execute(new InstructionExecutionArgs() { Robot = this.robotBase });
 		}
 
 		private void Update() {
