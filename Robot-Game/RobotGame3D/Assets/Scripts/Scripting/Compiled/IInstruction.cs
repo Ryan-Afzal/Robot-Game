@@ -23,6 +23,6 @@ namespace Assets.Scripts.Scripting.Compiled {
 		/// Called as part of a coroutine.
 		/// </summary>
 		/// <returns>Returns an IEnumerable specifying that it is not finished executing.</returns>
-		IEnumerable Execute();
+		IEnumerable Execute(InstructionExecutionArgs args);
 	}
 }

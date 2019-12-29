@@ -17,6 +17,11 @@ namespace Assets.Scripts.Scripting.Compiled {
 		public IInstruction Previous { get; set; }
 		public IInstruction Next { get; set; }
 
-		public abstract IEnumerable Execute();
+		/// <summary>
+		/// Executes this instruction.
+		/// </summary>
+		/// <param name="args"></param>
+		/// <returns></returns>
+		public abstract IEnumerable Execute(InstructionExecutionArgs args);
 	}
 }

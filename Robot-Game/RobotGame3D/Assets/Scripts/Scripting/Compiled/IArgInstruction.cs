@@ -13,19 +13,19 @@ namespace Assets.Scripts.Scripting.Compiled {
 		/// <summary>
 		/// Runs just before the instruction executes the first time.
 		/// </summary>
-		void Begin();
+		void Begin(InstructionExecutionArgs args);
 		
 		/// <summary>
 		/// Runs each update during execution. It returns whether the instruction has finished executing.
 		/// </summary>
 		/// <returns>Returns whether the instruction is finished executing.</returns>
-		bool Update();
+		bool Update(InstructionExecutionArgs args);
 
 		/// <summary>
 		/// Runs after the instruction is finished executing, when <c>Update()</c> returns <c>true</c>.
 		/// It should return a value.
 		/// </summary>
-		object End();
+		object End(InstructionExecutionArgs args);
 
 	}
 }

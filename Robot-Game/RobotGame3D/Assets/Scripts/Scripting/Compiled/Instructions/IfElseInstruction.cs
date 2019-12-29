@@ -12,18 +12,18 @@ namespace Assets.Scripts.Scripting.Compiled.Instructions {
 
 		}
 
-		public override IEnumerable Execute() {
+		public override IEnumerable Execute(InstructionExecutionArgs args) {
 			bool? test = null;
-			foreach (var i in this.args[0].Execute<bool>(o => test = o)) {
+			foreach (var i in this.args[0].Execute<bool>(args, o => test = o)) {
 				yield return null;
 			}
 
 			if (test.Value) {
-				foreach (var result in this[0].Execute()) {
+				foreach (var result in InstructionUtils.ExecuteChain(this[0], args)) {
 					yield return result;
 				}
 			} else {
-				foreach (var result in this[1].Execute()) {
+				foreach (var result in InstructionUtils.ExecuteChain(this[1], args)) {
 					yield return result;
 				}
 			}

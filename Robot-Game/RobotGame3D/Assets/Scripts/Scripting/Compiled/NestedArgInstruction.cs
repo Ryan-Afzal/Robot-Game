@@ -9,12 +9,12 @@ namespace Assets.Scripts.Scripting.Compiled {
 
 		protected readonly IArgInstruction[] args;
 
-		protected NestedArgInstruction(params IArgInstruction[] args) {
+		protected NestedArgInstruction(IArgInstruction[] args) {
 			this.args = args;
 		}
 
-		public abstract void Begin();
-		public abstract object End();
-		public abstract bool Update();
+		public abstract void Begin(InstructionExecutionArgs args);
+		public abstract object End(InstructionExecutionArgs args);
+		public abstract bool Update(InstructionExecutionArgs args);
 	}
 }
