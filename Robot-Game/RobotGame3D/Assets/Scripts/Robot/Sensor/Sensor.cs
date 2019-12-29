@@ -21,7 +21,7 @@ namespace Assets.Scripts.Robot.Sensor {
 			
 		}
 
-		protected internal abstract float[] GetData();
+		protected internal abstract object GetData();
 
 	}
 

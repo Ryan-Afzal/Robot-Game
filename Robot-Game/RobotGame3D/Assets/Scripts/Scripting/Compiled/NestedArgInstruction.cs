@@ -13,8 +13,6 @@ namespace Assets.Scripts.Scripting.Compiled {
 			this.args = args;
 		}
 
-		public abstract void Begin(InstructionExecutionArgs args);
-		public abstract object End(InstructionExecutionArgs args);
-		public abstract bool Update(InstructionExecutionArgs args);
+		public abstract Task<object> Execute(InstructionExecutionArgs args);
 	}
 }

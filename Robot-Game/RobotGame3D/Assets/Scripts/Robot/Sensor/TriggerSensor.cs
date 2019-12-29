@@ -9,7 +9,7 @@ namespace Assets.Scripts.Robot.Sensor {
 
 	public abstract class TriggerSensor : Sensor {
 
-		public event Action<float[]> onTrigger; 
+		public event Action<object> onTrigger; 
 
 		protected void Trigger() {
 			this.onTrigger?.Invoke(this.GetData());

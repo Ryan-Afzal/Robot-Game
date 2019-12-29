@@ -22,6 +22,6 @@ namespace Assets.Scripts.Scripting.Compiled {
 		/// </summary>
 		/// <param name="args"></param>
 		/// <returns></returns>
-		public abstract IEnumerable Execute(InstructionExecutionArgs args);
+		public abstract Task Execute(InstructionExecutionArgs args);
 	}
 }

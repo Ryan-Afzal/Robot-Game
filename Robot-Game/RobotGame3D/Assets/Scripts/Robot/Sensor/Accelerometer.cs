@@ -32,7 +32,7 @@ namespace Assets.Scripts.Robot.Sensor {
 			}
 		}
 
-		protected internal override float[] GetData() {
+		protected internal override object GetData() {
 			return new float[] {
 				this.rb.velocity.x, 
 				this.rb.velocity.y, 

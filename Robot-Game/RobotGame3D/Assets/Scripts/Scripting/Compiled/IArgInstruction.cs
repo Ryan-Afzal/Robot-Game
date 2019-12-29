@@ -6,26 +6,16 @@ using System.Threading.Tasks;
 
 namespace Assets.Scripts.Scripting.Compiled {
 	/// <summary>
-	/// Base type for instruction arguments. Its <c>End()</c> method returns a value.
+	/// Base type for instruction arguments. Its <c>Execute()</c> method returns a value.
 	/// </summary>
 	public interface IArgInstruction {
 
 		/// <summary>
-		/// Runs just before the instruction executes the first time.
+		/// Executes the <c>IArgInstruction</c> and returns the result.
 		/// </summary>
-		void Begin(InstructionExecutionArgs args);
-		
-		/// <summary>
-		/// Runs each update during execution. It returns whether the instruction has finished executing.
-		/// </summary>
-		/// <returns>Returns whether the instruction is finished executing.</returns>
-		bool Update(InstructionExecutionArgs args);
-
-		/// <summary>
-		/// Runs after the instruction is finished executing, when <c>Update()</c> returns <c>true</c>.
-		/// It should return a value.
-		/// </summary>
-		object End(InstructionExecutionArgs args);
+		/// <param name="args"></param>
+		/// <returns></returns>
+		Task<object> Execute(InstructionExecutionArgs args);
 
 	}
 }

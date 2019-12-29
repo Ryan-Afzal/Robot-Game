@@ -11,16 +11,11 @@ namespace Assets.Scripts.Scripting.Compiled.Instructions {
 
 		}
 
-		public override void Begin(InstructionExecutionArgs args) {
+		public override async Task<object> Execute(InstructionExecutionArgs args) {
+			int test = (int)await this.args[0].Execute(args);
 
+			return args.Robot.sensorManagers[test].GetData();
 		}
 
-		public override bool Update(InstructionExecutionArgs args) {
-			return true;
-		}
-
-		public override object End(InstructionExecutionArgs args) {
-			throw new NotImplementedException();
-		}
 	}
 }

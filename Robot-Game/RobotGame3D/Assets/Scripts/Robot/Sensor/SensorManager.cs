@@ -13,7 +13,7 @@ namespace Assets.Scripts.Robot.Sensor {
 
 		protected override void InitConstraints() {	}
 
-		public float[] GetData() {
+		public object GetData() {
 			return this.sensor.GetData();
 		}
 

@@ -15,7 +15,7 @@ namespace Assets.Scripts.Robot.Sensor {
 			this.rb = this.GetComponent<Rigidbody>();
 		}
 
-		protected internal override float[] GetData() {
+		protected internal override object GetData() {
 			return new float[] {
 				this.rb.angularVelocity.x,
 				this.rb.angularVelocity.y,

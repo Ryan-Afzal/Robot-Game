@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using UnityEngine;
 
 namespace Assets.Scripts.Scripting.Compiled {
@@ -19,10 +20,10 @@ namespace Assets.Scripts.Scripting.Compiled {
 		IInstruction Next { get; set; }
 
 		/// <summary>
-		/// Calls when the instruction executes.
-		/// Called as part of a coroutine.
+		/// Called to execute the instruction asynchronously.
 		/// </summary>
-		/// <returns>Returns an IEnumerable specifying that it is not finished executing.</returns>
-		IEnumerable Execute(InstructionExecutionArgs args);
+		/// <param name="args"></param>
+		/// <returns></returns>
+		Task Execute(InstructionExecutionArgs args);
 	}
 }

@@ -12,19 +12,12 @@ namespace Assets.Scripts.Scripting.Compiled.Instructions {
 
 		}
 
-		public override IEnumerable Execute(InstructionExecutionArgs args) {
-			bool? test = null;
-			foreach (var i in this.args[0].Execute<bool>(args, o => test = o)) {
-				yield return null;
-			}
+		public override async Task Execute(InstructionExecutionArgs args) {
+			bool test = (bool)await this.args[0].Execute(args);
 
-			if (test.Value) {
-				foreach (var result in InstructionUtils.ExecuteChain(this[0], args)) {
-					yield return result;
-				}
+			if (test) {
+				await this[0].ExecuteChainAsync(args);
 			}
-
-			yield break;
 		}
 	}
 }

@@ -8,7 +8,7 @@ using UnityEngine;
 namespace Assets.Scripts.Robot {
 
 	/// <summary>
-	/// Makes the attached component available to the <code>RobotBase</code> and provides the interface for interaction.
+	/// Makes the attached component available to the <c>RobotBase</c> and provides the interface for interaction.
 	/// </summary>
 	public abstract class Manager : MonoBehaviour {
 
