@@ -5,9 +5,9 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace Assets.Scripts.Scripting.Compiled.Instructions {
-	public class RotaryActuatorSetSpeedInstruction : Instruction {
+	public class RotaryActuatorRotateToInstruction : Instruction {
 
-		public RotaryActuatorSetSpeedInstruction(IArgInstruction[] args) : base(args) {
+		public RotaryActuatorRotateToInstruction(IArgInstruction[] args) : base(args) {
 
 		}
 
@@ -15,7 +15,7 @@ namespace Assets.Scripts.Scripting.Compiled.Instructions {
 			int actuatorID = (int)await this.args[0].Execute(args);
 			float setpoint = (float)await this.args[1].Execute(args);
 
-			args.Robot.rotaryActuatorManagers[actuatorID].SetActuatorSpeed(setpoint);
+			args.Robot.rotaryActuatorManagers[actuatorID].RotateActuatorTo(setpoint);
 		}
 	}
 }

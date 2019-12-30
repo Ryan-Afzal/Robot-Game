@@ -40,6 +40,10 @@ namespace Assets.Scripts {
 		}
 
 		private async void Start() {
+			// Seen here is a demo of the instruction system.
+			// It shows instructions being executed by the robot.
+			
+			// These instructions, if the literal is set to true, will cause the robot to have one wheel set in motion at the start of the scene.
 			IInstruction instruction = new IfInstruction(
 				new IInstruction[] { new RotaryActuatorSetSpeedInstruction(new IArgInstruction[] { new LiteralArgInstruction(0), new LiteralArgInstruction(10f) }) }, 
 				new IArgInstruction[] { new LiteralArgInstruction(false) }
