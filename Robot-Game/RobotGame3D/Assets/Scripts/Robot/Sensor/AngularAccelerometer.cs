@@ -16,11 +16,7 @@ namespace Assets.Scripts.Robot.Sensor {
 		}
 
 		protected internal override object GetData() {
-			return new float[] {
-				this.rb.angularVelocity.x,
-				this.rb.angularVelocity.y,
-				this.rb.angularVelocity.z
-			};
+			return this.rb.angularVelocity;
 		}
 	}
 

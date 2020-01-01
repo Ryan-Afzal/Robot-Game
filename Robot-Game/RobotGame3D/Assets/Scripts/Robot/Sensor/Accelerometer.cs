@@ -11,9 +11,6 @@ namespace Assets.Scripts.Robot.Sensor {
 
 		private readonly Rigidbody rb;
 
-		public bool HasTriggerLimit { get; private set; }
-		public float TriggerLimit { get; private set; }
-
 		public Accelerometer() {
 			HasTriggerLimit = false;
 			TriggerLimit = 0.0f;
@@ -26,6 +23,9 @@ namespace Assets.Scripts.Robot.Sensor {
 			TriggerLimit = triggerLimit;
 		}
 
+		public bool HasTriggerLimit { get; }
+		public float TriggerLimit { get; }
+
 		protected override void Update() {
 			if (rb.velocity.magnitude >= TriggerLimit) {
 				this.Trigger();
@@ -33,11 +33,7 @@ namespace Assets.Scripts.Robot.Sensor {
 		}
 
 		protected internal override object GetData() {
-			return new float[] {
-				this.rb.velocity.x, 
-				this.rb.velocity.y, 
-				this.rb.velocity.z
-			};
+			return this.rb.velocity;
 		}
 	}
 
