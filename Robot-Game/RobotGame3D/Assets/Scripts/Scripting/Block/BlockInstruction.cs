@@ -1,27 +1,43 @@
+using Assets.Scripts.Scripting.Compiled;
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using UnityEngine;
+using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 namespace Assets.Scripts.Scripting.Block {
 
-  public abstract class BlockInstruction : MonoBehaviour {
-    
-    private string startText;
-    private string[] text;
-    private IArgInstruction[] args;
-    
-    protected void Init(string startText, params string[] text) {
-      this.startText = startText;
-      this.text = text;
-      this.args = new IArgInstruction[this.text.Length];
+    public class BlockInstruction : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler {
+
+        private Image image;
+        private RectTransform rectTransform;
+        
+        public void Awake() {
+            this.image = GetComponent<Image>();
+            this.rectTransform = GetComponent<RectTransform>();
+        }
+
+        public void OnBeginDrag(PointerEventData eventData) {
+            this.image.color = Color.green;
+        }
+
+        public void OnDrag(PointerEventData eventData) {
+            transform.position = eventData.position;
+        }
+
+        public void OnEndDrag(PointerEventData eventData) {
+            this.image.color = Color.white;
+
+            var result = FindObjectsOfType<BlockInstruction>()
+                .FirstOrDefault(o => o != this && Vector3.Distance(o.rectTransform.position, this.rectTransform.position) < 50);
+
+            if (result is object) {
+                this.rectTransform.position = result.GetComponent<RectTransform>().position + new Vector3(0, -100, 0);
+            }
+        }
     }
     
-    public BlockInstruction Previous { get; private set; }
-    public BlockInstruction Next { get; private set; }
-    
-    public abstract IInstruction GetCompiledValue();
-    
-  }
-  
 }
