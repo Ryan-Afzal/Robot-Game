@@ -35,7 +35,7 @@ namespace Assets.Scripts.Scripting.Block {
                 .FirstOrDefault(o => Vector3.Distance(o.GetComponent<RectTransform>().position, this.rectTransform.position) < 50);
             
             if (trash is object) {
-                Destroy(this);
+                Destroy(this.gameObject);
                 return;
             }
             
