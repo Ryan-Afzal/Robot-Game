@@ -30,7 +30,15 @@ namespace Assets.Scripts.Scripting.Block {
 
         public void OnEndDrag(PointerEventData eventData) {
             this.image.color = Color.white;
-
+            
+            var trash = FindObjectsOfType<TrashSlot>()
+                .FirstOrDefault(o => Vector3.Distance(o.GetComponent<RectTransform>().position, this.rectTransform.position) < 50);
+            
+            if (trash is object) {
+                Destroy(this);
+                return;
+            }
+            
             var result = FindObjectsOfType<BlockInstruction>()
                 .FirstOrDefault(o => o != this && Vector3.Distance(o.rectTransform.position, this.rectTransform.position) < 50);
 
