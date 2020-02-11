@@ -11,5 +11,13 @@ using UnityEngine.UI;
 namespace Assets.Scripts.Scripting.Block {
     public class TrashSlot : MonoBehaviour {
         
+        private Image image;
+        private RectTransform rectTransform;
+        
+        public void Awake() {
+            this.image = GetComponent<Image>();
+            this.rectTransform = GetComponent<RectTransform>();
+        }
+        
     }
 }
