@@ -15,6 +15,9 @@ namespace Assets.Scripts.Scripting.Block {
         private Image image;
         private RectTransform rectTransform;
         
+        private BlockInstruction prev;
+        private BlockInstruction next;
+        
         public void Awake() {
             this.image = GetComponent<Image>();
             this.rectTransform = GetComponent<RectTransform>();
@@ -22,6 +25,9 @@ namespace Assets.Scripts.Scripting.Block {
 
         public void OnBeginDrag(PointerEventData eventData) {
             this.image.color = Color.green;
+            this.rectTransform.parent = null;
+            this.prev.next = null;
+            this.prev = null;
         }
 
         public void OnDrag(PointerEventData eventData) {
@@ -43,7 +49,11 @@ namespace Assets.Scripts.Scripting.Block {
                 .FirstOrDefault(o => o != this && Vector3.Distance(o.rectTransform.position, this.rectTransform.position) < 50);
 
             if (result is object) {
-                this.rectTransform.position = result.GetComponent<RectTransform>().position + new Vector3(0, -100, 0);
+                var resultTransform = result.GetComponent<RectTransform>();
+                this.rectTransform.position = resultTransform.position + new Vector3(0, -100, 0);
+                this.rectTransform.parent = resultTransform;
+                this.prev = result;
+                this.prev.next = this;
             }
         }
     }
