@@ -10,24 +10,19 @@ using UnityEngine.UI;
 
 namespace Assets.Scripts.Scripting.Block {
     
-    public abstract class BlockInstruction : BlockDraggable<BlockInstruction> {
+    public abstract class BlockInstruction : BlockDraggable {
 
         public string startText;
         public string[] text;
         
         private Image image;
         
-        public void Awake() {
-            this.image = GetComponent<Image>();
-            this.rectTransform = GetComponent<RectTransform>();
+        public virtual void Start() {
+			this.image = GetComponent<Image>();
 
 			this.onBeginDrag += this.SetColorDrag;
 			this.onEndDrag += this.SetColorEndDrag;
-        }
-
-        public virtual void Start() {
-
-        }
+		}
 
         public abstract IInstruction GetCompiledInstruction();
 
@@ -35,11 +30,11 @@ namespace Assets.Scripts.Scripting.Block {
 			this.image.color = Color.green;
 		}
 
-		private void SetColorEndDrag(PointerEventData eventData) {
+		private void SetColorEndDrag(OnEndDragArgs args) {
 			this.image.color = Color.white;
 		}
 
-		protected override bool CanDrop(OnDragEventArgs args) {
+		protected override bool CanDrop(OnEndDragArgs args) {
 			var trash = FindObjectsOfType<TrashSlot>()
 					.FirstOrDefault(o => Vector3.Distance(o.GetComponent<RectTransform>().position, this.rectTransform.position) < 50);
 
