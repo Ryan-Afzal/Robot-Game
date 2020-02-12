@@ -7,7 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace Assets.Scripts.Scripting {
-	public static class InstructionUtils {
+	public static class InstructionExtensions {
 
 		/// <summary>
 		/// Executes the provided <c>IInstruction</c> and all of its following instructions in order, asynchronously.
