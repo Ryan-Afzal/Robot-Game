@@ -23,12 +23,12 @@ namespace Assets.Scripts.Scripting.Block {
 
         public Canvas canvas;
         
-        private RectTransform rectTransform;
+        protected RectTransform rectTransform;
         
         private T prev;
         protected T next;
         
-        public event Action<PointerEventData> onBeginDrag, onDrag, onBeforeEndDrag;
+        public event Action<PointerEventData> onBeginDrag, onDrag;
         public event Action<OnEndDragArgs<T>> onEndDrag;
         
         public void Awake() {
@@ -58,13 +58,13 @@ namespace Assets.Scripts.Scripting.Block {
         }
 
         public void OnEndDrag(PointerEventData eventData) {
-            if (!this.locked) {
-                this.onBeforeEndDrag?.Invoke(eventData);
-                
+            if (!this.locked) {                
                 var result = FindObjectsOfType<T>()
                     .FirstOrDefault(o => o != this && Vector3.Distance(o.rectTransform.position, this.rectTransform.position) < 50);
 
-                if (result is object) {
+				var args = new OnEndDragArgs() { EventData = eventData, FoundObject = result };
+
+				if (result is object && this.CanDrop(args)) {
                     var resultTransform = result.GetComponent<RectTransform>();
                     this.rectTransform.position = resultTransform.position + this.offset;
                     this.rectTransform.SetParent(resultTransform, false);
@@ -72,9 +72,11 @@ namespace Assets.Scripts.Scripting.Block {
                     this.prev.next = this;
                 }
                 
-                this.onEndDrag?.Invoke(new OnEndDragArgs() { EventData = eventData, FoundObject = result });
+                this.onEndDrag?.Invoke(args);
             }
         }
+
+		protected abstract bool CanDrop(OnEndDragArgs args);
     }
     
 }
