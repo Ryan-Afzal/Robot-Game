@@ -9,20 +9,22 @@ using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 namespace Assets.Scripts.Scripting.Block {
-	public sealed class StartBlock : BlockDraggable {
+	public sealed class StartBlock : BlockInstruction {
 
-        public void Start() {
+        public override void Start() {
+            base.Start();
             Locked = true;
         }
 
         public async void Update() {
             if (Input.GetKeyDown(KeyCode.R)) {
-                await ((BlockInstruction)Next).GetCompiledInstruction().ExecuteChainAsync(new InstructionExecutionArgs() { Robot = null });
+                await Next
+                    .GetCompiledInstruction()
+                    .ExecuteChainAsync(new InstructionExecutionArgs() { Robot = null });
             }
         }
-
-        protected override bool CanDrop(OnEndDragArgs args) {
-            return true;
+        public override IInstruction GetCompiledInstruction() {
+            throw new InvalidOperationException();
         }
     }
 }

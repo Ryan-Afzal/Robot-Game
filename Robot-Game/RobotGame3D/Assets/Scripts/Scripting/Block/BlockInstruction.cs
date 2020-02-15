@@ -47,10 +47,12 @@ namespace Assets.Scripts.Scripting.Block {
 
         public void OnBeginDrag(PointerEventData eventData) {
             if (!Locked) {
-                RectTransform.SetParent(this.canvas.transform);
+                RectTransform.SetParent(this.canvas.transform, true);
 
-                Previous.Next = null;
-                Previous = null;
+                if (Previous is object) {
+                    Previous.Next = null;
+                    Previous = null;
+                }
 
                 SetColorDrag();
             }
@@ -73,19 +75,20 @@ namespace Assets.Scripts.Scripting.Block {
                 }
 
                 var result = FindObjectsOfType<BlockInstruction>()
-                    .FirstOrDefault(o => o != this && Vector3.Distance(o.RectTransform.position, this.RectTransform.position) < 50);
+                    .Where(o => o.Next is null)
+                    .FirstOrDefault(o => o != this && Vector3.Distance(o.RectTransform.position, eventData.position) < 50);
 
                 if (result is object) {
                     var resultTransform = result.GetComponent<RectTransform>();
 
                     RectTransform.position = resultTransform.position + this.offset;
-                    RectTransform.SetParent(resultTransform, false);
+                    RectTransform.SetParent(resultTransform, true);
 
                     Previous = result;
                     Previous.Next = this;
-
-                    SetColorEndDrag();
                 }
+
+                SetColorEndDrag();
             }
         }
 
