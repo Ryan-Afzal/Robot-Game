@@ -15,7 +15,7 @@ namespace Assets.Scripts.Scripting.Block.Instructions {
 
 		public override IInstruction GetCompiledInstruction() {
 			var output = new Compiled.Instructions.PrintInstruction(new IArgInstruction[0]);
-			IInstruction next = (Next as BlockInstruction)?.GetCompiledInstruction();
+			IInstruction next = Next?.GetCompiledInstruction();
 
 			output.Next = next;
 
