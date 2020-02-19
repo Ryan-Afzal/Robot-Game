@@ -9,13 +9,15 @@ using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 namespace Assets.Scripts.Scripting.Block {
-    
+
     public abstract class BlockInstruction : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler {
 
         public string startText;
         public string[] text;
-        
+
         private Image image;
+        private Shadow shadow;
+        private RectTransform rectTransform;
 
         public Vector3 offset = new Vector3(0, -100, 0);
 
@@ -26,15 +28,18 @@ namespace Assets.Scripts.Scripting.Block {
         public BlockInstruction Previous { get; set; }
         public BlockInstruction Next { get; set; }
 
-        public RectTransform RectTransform { get; set; }
-
         public void Awake() {
-            RectTransform = GetComponent<RectTransform>();
+            this.rectTransform = GetComponent<RectTransform>();
             this.image = GetComponent<Image>();
+            this.shadow = GetComponent<Shadow>();
         }
 
         public virtual void Start() {
 
+        }
+
+        public virtual void Update() {
+            this.shadow.enabled = RectTransformUtility.RectangleContainsScreenPoint(this.rectTransform, Input.mousePosition);
         }
 
         private void SetColorDrag() {
@@ -47,7 +52,7 @@ namespace Assets.Scripts.Scripting.Block {
 
         public void OnBeginDrag(PointerEventData eventData) {
             if (!Locked) {
-                RectTransform.SetParent(this.canvas.transform, true);
+                this.rectTransform.SetParent(this.canvas.transform, true);
 
                 if (Previous is object) {
                     Previous.Next = null;
@@ -66,23 +71,26 @@ namespace Assets.Scripts.Scripting.Block {
 
         public void OnEndDrag(PointerEventData eventData) {
             if (!Locked) {
-                var trash = FindObjectsOfType<TrashSlot>()
-                    .FirstOrDefault(o => Vector3.Distance(o.GetComponent<RectTransform>().position, RectTransform.position) < 50);
+                var list = new List<RaycastResult>();
+                EventSystem.current.RaycastAll(eventData, list);
 
-                if (trash is object) {
+                var results = list
+                    .Select(r => r.gameObject)
+                    .Where(o => !ReferenceEquals(this.gameObject, o));
+
+                if (results.FirstOrDefault(o => o.GetComponent<TrashSlot>() is object) is object) {
                     Destroy(gameObject);
                     return;
                 }
 
-                var result = FindObjectsOfType<BlockInstruction>()
-                    .Where(o => o.Next is null)
-                    .FirstOrDefault(o => o != this && Vector3.Distance(o.RectTransform.position, eventData.position) < 50);
+                var obj = results.FirstOrDefault(o => o.GetComponent<BlockInstruction>() is object);
 
-                if (result is object) {
+                if (obj is object) {
+                    var result = obj.GetComponent<BlockInstruction>();
                     var resultTransform = result.GetComponent<RectTransform>();
 
-                    RectTransform.position = resultTransform.position + this.offset;
-                    RectTransform.SetParent(resultTransform, true);
+                    this.rectTransform.position = resultTransform.position + this.offset;
+                    this.rectTransform.SetParent(resultTransform, true);
 
                     Previous = result;
                     Previous.Next = this;
@@ -95,5 +103,5 @@ namespace Assets.Scripts.Scripting.Block {
         public abstract IInstruction GetCompiledInstruction();
 
     }
-    
+
 }

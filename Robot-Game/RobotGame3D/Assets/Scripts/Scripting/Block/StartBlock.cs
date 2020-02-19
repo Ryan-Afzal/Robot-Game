@@ -16,7 +16,9 @@ namespace Assets.Scripts.Scripting.Block {
             Locked = true;
         }
 
-        public async void Update() {
+        public async override void Update() {
+            base.Update();
+
             if (Input.GetKeyDown(KeyCode.R)) {
                 await Next
                     .GetCompiledInstruction()
