@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &662969248250037226
+--- !u!1 &142703267689688896
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,52 +8,52 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 662969248250037227}
-  - component: {fileID: 662969248250037142}
-  - component: {fileID: 662969248250037225}
-  - component: {fileID: 662969248250037224}
-  - component: {fileID: 3142525558160625859}
+  - component: {fileID: 142703267689688897}
+  - component: {fileID: 142703267689688900}
+  - component: {fileID: 142703267689688903}
+  - component: {fileID: 142703267689688902}
+  - component: {fileID: -9057976988465138320}
   m_Layer: 5
-  m_Name: PrintBlock
+  m_Name: ArgSocketPrefab
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!224 &662969248250037227
+--- !u!224 &142703267689688897
 RectTransform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 662969248250037226}
+  m_GameObject: {fileID: 142703267689688896}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.2, y: 0.2, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 99, y: 32.52954}
-  m_SizeDelta: {x: 350, y: 225}
+  m_AnchoredPosition: {x: -35.674072, y: 85.552124}
+  m_SizeDelta: {x: 256, y: 64}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!222 &662969248250037142
+--- !u!222 &142703267689688900
 CanvasRenderer:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 662969248250037226}
+  m_GameObject: {fileID: 142703267689688896}
   m_CullTransparentMesh: 0
---- !u!114 &662969248250037225
+--- !u!114 &142703267689688903
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 662969248250037226}
+  m_GameObject: {fileID: 142703267689688896}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
@@ -65,7 +65,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: ed6f6374a4de7da40bf6749a3de3762c, type: 3}
+  m_Sprite: {fileID: 21300000, guid: f26422878e7c90d4b8d6438d09d5fcf2, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -75,32 +75,25 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &662969248250037224
+--- !u!114 &142703267689688902
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 662969248250037226}
+  m_GameObject: {fileID: 142703267689688896}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 55ddb3a83ab03ee41a026d0125decb5d, type: 3}
+  m_Script: {fileID: 11500000, guid: b2d777e055d4a79468e8ed445b8b4c97, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startText: Print
-  text:
-  - on a new line
-  offset: {x: 0, y: -35, z: 0}
-  canvas: {fileID: 0}
-  argSocketPrefab: {fileID: 142703267689688896, guid: 393a19fd45e737c489eedd0cdd87ddbf,
-    type: 3}
---- !u!114 &3142525558160625859
+--- !u!114 &-9057976988465138320
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 662969248250037226}
+  m_GameObject: {fileID: 142703267689688896}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: cfabb0440166ab443bba8876756fdfa9, type: 3}
