@@ -17,6 +17,7 @@ namespace Assets.Scripts.Scripting.Block {
         private Image image;
         private Shadow shadow;
         private RectTransform rectTransform;
+        private HorizontalLayoutGroup horizontalLayout;
 
         public string startText;
         public string[] text;
@@ -37,6 +38,7 @@ namespace Assets.Scripts.Scripting.Block {
         public BlockInstruction Next { get; set; }
 
         public void Awake() {
+            this.horizontalLayout = GetComponent<HorizontalLayoutGroup>();
             this.rectTransform = GetComponent<RectTransform>();
             this.image = GetComponent<Image>();
             this.shadow = GetComponent<Shadow>();
@@ -47,23 +49,13 @@ namespace Assets.Scripts.Scripting.Block {
             this.textCells[0] = Instantiate(this.textCellPrefab, this.rectTransform, false).GetComponent<Text>();
             this.textCells[0].text = this.startText;
 
-            var pos = this.textCells[0].rectTransform.position + new Vector3(this.textCells[0].rectTransform.rect.width / 2, 0, 0) + ArgTextOffset;
-
             for (int i = 0; i < this.argSockets.Length; i++) {
                 this.argSockets[i] = Instantiate(this.argSocketPrefab, this.rectTransform, false).GetComponent<ArgSocket>();
                 this.argSockets[i].Base = this;
-                this.argSockets[i].transform.position = pos;
-
-                pos += new Vector3(this.argSockets[i].rectTransform.rect.width / 2, 0, 0) + ArgTextOffset;
 
                 this.textCells[i + 1] = Instantiate(this.textCellPrefab, this.rectTransform, false).GetComponent<Text>();
                 this.textCells[i + 1].text = this.text[i];
-                this.textCells[i + 1].transform.position = pos;
-
-                pos += new Vector3(this.textCells[i + 1].rectTransform.rect.width / 2, 0, 0) + ArgTextOffset;
             }
-
-            this.rectTransform.ForceUpdateRectTransforms();
         }
 
         public virtual void Start() {
