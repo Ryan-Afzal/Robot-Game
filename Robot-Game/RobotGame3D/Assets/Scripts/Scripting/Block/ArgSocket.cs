@@ -11,7 +11,8 @@ using UnityEngine.UI;
 namespace Assets.Scripts.Scripting.Block {
 	public sealed class ArgSocket : MonoBehaviour {
 
-		private RectTransform rectTransform;
+		[HideInInspector]
+		public RectTransform rectTransform;
 		private Image image;
 		private Shadow shadow;
 

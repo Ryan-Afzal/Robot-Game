@@ -89,7 +89,7 @@ namespace Assets.Scripts.Scripting.Block {
                     var resultTransform = result.GetComponent<RectTransform>();
 
                     this.rectTransform.position = resultTransform.position + this.offset;
-                    this.rectTransform.SetParent(resultTransform, true);
+                    this.rectTransform.SetParent(resultTransform, false);
 
                     Base = result;
                     Base.Argument = this;

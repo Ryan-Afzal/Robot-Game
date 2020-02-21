@@ -92,6 +92,8 @@ MonoBehaviour:
   - on a new line
   offset: {x: 0, y: -35, z: 0}
   canvas: {fileID: 0}
+  textCellPrefab: {fileID: 3064895955397725257, guid: 9948554e2167da44f93a709afb3a31da,
+    type: 3}
   argSocketPrefab: {fileID: 142703267689688896, guid: 393a19fd45e737c489eedd0cdd87ddbf,
     type: 3}
 --- !u!114 &3142525558160625859

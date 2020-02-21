@@ -12,7 +12,7 @@ namespace Assets.Scripts.Scripting.Block {
 
     public abstract class BlockInstruction : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler, IHierarchyChangeHandler {
 
-        private ArgSocket[] argSockets;
+        public static readonly Vector3 ArgTextOffset = new Vector3(1, 0, 0);
 
         private Image image;
         private Shadow shadow;
@@ -25,7 +25,11 @@ namespace Assets.Scripts.Scripting.Block {
 
         public Canvas canvas;
 
+        public GameObject textCellPrefab;
         public GameObject argSocketPrefab;
+
+        private Text[] textCells;
+        private ArgSocket[] argSockets;
 
         public bool Locked { get; set; }
 
@@ -37,14 +41,29 @@ namespace Assets.Scripts.Scripting.Block {
             this.image = GetComponent<Image>();
             this.shadow = GetComponent<Shadow>();
 
+            this.textCells = new Text[this.text.Length + 1];
             this.argSockets = new ArgSocket[this.text.Length];
-            
-            for (int i = 0; i < this.argSockets.Length; i++) {
-                this.argSockets[i] = Instantiate(this.argSocketPrefab, this.rectTransform).GetComponent<ArgSocket>();
-                this.argSockets[i].Base = this;
 
-                // Set Position
+            this.textCells[0] = Instantiate(this.textCellPrefab, this.rectTransform, false).GetComponent<Text>();
+            this.textCells[0].text = this.startText;
+
+            var pos = this.textCells[0].rectTransform.position + new Vector3(this.textCells[0].rectTransform.rect.width / 2, 0, 0) + ArgTextOffset;
+
+            for (int i = 0; i < this.argSockets.Length; i++) {
+                this.argSockets[i] = Instantiate(this.argSocketPrefab, this.rectTransform, false).GetComponent<ArgSocket>();
+                this.argSockets[i].Base = this;
+                this.argSockets[i].transform.position = pos;
+
+                pos += new Vector3(this.argSockets[i].rectTransform.rect.width / 2, 0, 0) + ArgTextOffset;
+
+                this.textCells[i + 1] = Instantiate(this.textCellPrefab, this.rectTransform, false).GetComponent<Text>();
+                this.textCells[i + 1].text = this.text[i];
+                this.textCells[i + 1].transform.position = pos;
+
+                pos += new Vector3(this.textCells[i + 1].rectTransform.rect.width / 2, 0, 0) + ArgTextOffset;
             }
+
+            this.rectTransform.ForceUpdateRectTransforms();
         }
 
         public virtual void Start() {
