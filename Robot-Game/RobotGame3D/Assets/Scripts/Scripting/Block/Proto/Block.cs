@@ -10,70 +10,94 @@ using UnityEngine.UI;
 namespace Assets.Scripts.Scripting.Block.Proto {
 
 	[RequireComponent(typeof(Image))]
-	[RequireComponent(typeof(Shadow))]
+	[RequireComponent(typeof(GridLayoutGroup))]
 	[RequireComponent(typeof(RectTransform))]
-	public class Block : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler {
+	public class Block : MonoBehaviour {
 
-		public Canvas canvas;
+        public ArgSocket argSocketPrefab;
+        public Text textPrefab;
 
-		public GameObject horizontalBarGameObject;
+        public Canvas canvas;
+        public string startText;
+        public string[] text;
 
+        private RectTransform rectTransform;
 		private Image image;
-		private Shadow shadow;
-		private RectTransform rectTransform;
+		private GridLayoutGroup gridLayoutGroup;
 
-		public Block Previous { get; set; }
-		public Block Next { get; set; }
+        private ArgSocket[] argSockets;
+        private Text[] textCells;
+
+        internal BlockSocket prevSocket;
 
 		public void Awake() {
-			this.image = GetComponent<Image>();
-			this.shadow = GetComponent<Shadow>();
 			this.rectTransform = GetComponent<RectTransform>();
+			this.image = GetComponent<Image>();
+			this.gridLayoutGroup = GetComponent<GridLayoutGroup>();
+
+			this.IntializeTextAndArgSockets(this.startText, this.text);
 		}
 
-		public void Start() {
+        private void IntializeTextAndArgSockets(string startText, string[] textCells) {
+            this.textCells = new Text[textCells.Length + 1];
+            this.argSockets = new ArgSocket[textCells.Length];
 
-		}
+            this.textCells[0] = Instantiate(this.textPrefab, this.rectTransform);
+            this.textCells[0].text = startText;
 
-		public void Update() {
+            for (int i = 0; i < textCells.Length; i++) {
+                this.argSockets[i] = Instantiate(this.argSocketPrefab, this.rectTransform);
 
-		}
+                this.textCells[i + 1] = Instantiate(this.textPrefab, this.rectTransform);
+                this.textCells[i + 1].text = textCells[i];
+            }
 
-		public void OnBeginDrag(PointerEventData eventData) {
-			this.rectTransform.SetParent(this.canvas.transform, true);
+            this.rectTransform.ForceUpdateRectTransforms();
+            this.gridLayoutGroup.CalculateLayoutInputHorizontal();
+        }
 
-			if (Previous is object) {
-				Previous.Next = null;
-				Previous = null;
-			}
-		}
+        public void HierarchyChanged() {
+            this.prevSocket?.InvokeHierarchyChanged();
+        }
 
-		public void OnDrag(PointerEventData eventData) {
-			this.rectTransform.position = eventData.position;
-		}
+        public void OnGUI() {
+            GUI.Label(this.rectTransform.rect, new GUIContent() { image = null });
+        }
 
-		public void OnEndDrag(PointerEventData eventData) {
-			var list = new List<RaycastResult>();
-			EventSystem.current.RaycastAll(eventData, list);
+        #region Drag
 
-			var results = list
-				.Select(r => r.gameObject)
-				.Where(o => !ReferenceEquals(this.gameObject, o));
+        public void OnBeginDrag(PointerEventData eventData) {
+            this.rectTransform.SetParent(this.canvas.transform, true);
 
-			var obj = results.FirstOrDefault(o => o.GetComponent<Block>() is object);
+            this.prevSocket?.Detach();
+        }
 
-			if (obj is object) {
-				var result = obj.GetComponent<Block>();
-				var resultTransform = result.GetComponent<RectTransform>();
+        public void OnDrag(PointerEventData eventData) {
+            transform.position = eventData.position;
+        }
 
-				this.rectTransform.position = resultTransform.position + new Vector3(0, -resultTransform.rect.height * resultTransform.lossyScale.y, 0);
-				this.rectTransform.SetParent(resultTransform, true);
+        public void OnEndDrag(PointerEventData eventData) {
+            var list = new List<RaycastResult>();
+            EventSystem.current.RaycastAll(eventData, list);
 
-				Previous = result;
-				Previous.Next = this;
-			}
-		}
+            var results = list
+                .Select(r => r.gameObject)
+                .Where(o => !ReferenceEquals(gameObject, o));
 
-	}
+            var obj = results.FirstOrDefault(o => o.GetComponent<BlockSocket>() is object);
 
+            if (obj is object) {
+                var result = obj.GetComponent<BlockSocket>();
+                var resultTransform = result.GetComponent<RectTransform>();
+
+                this.rectTransform.position = resultTransform.position + new Vector3();
+                this.rectTransform.SetParent(resultTransform, true);
+
+                result.Attach(this);
+            }
+        }
+
+        #endregion Drag
+
+    }
 }
