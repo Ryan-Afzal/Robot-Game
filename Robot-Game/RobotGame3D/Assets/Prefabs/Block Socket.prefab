@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 6853516753295849634}
   - component: {fileID: 6853516753295849632}
   - component: {fileID: 6853516753295849635}
-  - component: {fileID: 6853516753295849633}
+  - component: {fileID: 5131847917412223128}
   m_Layer: 5
   m_Name: Block Socket
   m_TagString: Untagged
@@ -74,7 +74,7 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &6853516753295849633
+--- !u!114 &5131847917412223128
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -83,6 +83,6 @@ MonoBehaviour:
   m_GameObject: {fileID: 6853516753295849645}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e356c44b737277d45abc046f0fa24b6e, type: 3}
+  m_Script: {fileID: 11500000, guid: 705a6610f9f763e4da8fe1e6d5121c52, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 

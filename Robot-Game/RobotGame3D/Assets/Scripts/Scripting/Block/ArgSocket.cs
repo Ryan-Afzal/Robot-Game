@@ -9,44 +9,42 @@ using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 namespace Assets.Scripts.Scripting.Block {
+
+	[RequireComponent(typeof(Image))]
+	[RequireComponent(typeof(Shadow))]
+	[RequireComponent(typeof(RectTransform))]
 	public sealed class ArgSocket : MonoBehaviour {
 
-		[HideInInspector]
-		public RectTransform rectTransform;
 		private Image image;
 		private Shadow shadow;
+		private RectTransform rectTransform;
 
-		private bool visible;
-
-		public bool Visible {
-			
-			get {
-				return this.visible;
-			}
-
-			set {
-				this.visible = value;
-				this.image.enabled = value;
-			}
-
-		}
-
-		public IHierarchyChangeHandler Base { get; set; }
-		public BlockArgument Argument { get; set; }
+		private Argument argument;
 
 		public void Awake() {
-			this.rectTransform = GetComponent<RectTransform>();
 			this.image = GetComponent<Image>();
 			this.shadow = GetComponent<Shadow>();
+			this.rectTransform = GetComponent<RectTransform>();
+		}
+
+		public void Start() {
+
 		}
 
 		public void Update() {
-			this.shadow.enabled = Visible ? RectTransformUtility.RectangleContainsScreenPoint(this.rectTransform, Input.mousePosition) : false;
+
 		}
 
-		public void HierarchyChanged() {
-			Argument.HierarchyChanged();
+		public void Detach() {
+			this.argument.Base = null;
+			this.argument = null;
+		}
+
+		public void Attach(Argument argument) {
+			this.argument = argument;
+			this.argument.Base = this;
 		}
 
 	}
+
 }

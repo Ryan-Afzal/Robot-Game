@@ -7,7 +7,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 
-namespace Assets.Scripts.Scripting.Block.Proto {
+namespace Assets.Scripts.Scripting.Block {
 
 	[RequireComponent(typeof(Image))]
 	[RequireComponent(typeof(RectTransform))]

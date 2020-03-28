@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 3593016678496454596}
   - component: {fileID: 3593016678496454595}
   - component: {fileID: 3593016678496454594}
-  - component: {fileID: 3593016678496454593}
+  - component: {fileID: -7829140018879509090}
   m_Layer: 5
   m_Name: Arg Socket
   m_TagString: Untagged
@@ -90,7 +90,7 @@ MonoBehaviour:
   m_EffectColor: {r: 0, g: 0, b: 0, a: 0.5}
   m_EffectDistance: {x: 1, y: -1}
   m_UseGraphicAlpha: 1
---- !u!114 &3593016678496454593
+--- !u!114 &-7829140018879509090
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -99,6 +99,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 3593016678496454207}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0c6cd550eaca2d444966e8d0050e2ec9, type: 3}
+  m_Script: {fileID: 11500000, guid: b2d777e055d4a79468e8ed445b8b4c97, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  rectTransform: {fileID: 0}

@@ -7,7 +7,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-namespace Assets.Scripts.Scripting.Block.Proto {
+namespace Assets.Scripts.Scripting.Block {
 
 	[RequireComponent(typeof(Image))]
 	[RequireComponent(typeof(RectTransform))]
@@ -39,12 +39,13 @@ namespace Assets.Scripts.Scripting.Block.Proto {
 		public void Awake() {
             // TEMP
             this.textCells = new string[][] {
-                new string[] { "Print ", " to the console" }
+                new string[] { "Print ", " to the console" },
+                new string[] { "" }
             };
 
             this.text = new string[textCells.Length, textCells[0].Length];
             for (int r = 0; r < this.textCells.Length; r++) {
-                for (int c = 0; c < this.textCells[0].Length; c++) {
+                for (int c = 0; c < this.textCells[r].Length; c++) {
                     this.text[r, c] = this.textCells[r][c];
                 }
             }
@@ -176,8 +177,8 @@ namespace Assets.Scripts.Scripting.Block.Proto {
                 var result = obj.GetComponent<BlockSocket>();
                 var resultTransform = result.GetComponent<RectTransform>();
 
-                this.rectTransform.position = resultTransform.position + new Vector3();
                 this.rectTransform.SetParent(resultTransform, true);
+                this.rectTransform.localPosition = new Vector3(-this.padding.x, 0, 0);
 
                 result.Attach(this);
             }

@@ -7,7 +7,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-namespace Assets.Scripts.Scripting.Block.Proto {
+namespace Assets.Scripts.Scripting.Block {
 
 	[RequireComponent(typeof(RectTransform))]
 	public sealed class HorizontalBar : MonoBehaviour {

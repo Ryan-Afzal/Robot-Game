@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 648952797361574112}
   - component: {fileID: 648952797361574117}
   - component: {fileID: 648952797361574118}
-  - component: {fileID: 648952797361574119}
+  - component: {fileID: 3783287681850699412}
   m_Layer: 5
   m_Name: Block
   m_TagString: Untagged
@@ -74,7 +74,7 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &648952797361574119
+--- !u!114 &3783287681850699412
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -83,17 +83,17 @@ MonoBehaviour:
   m_GameObject: {fileID: 648952797361574113}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 654fb6e33b4349d4481dc90efbc890d4, type: 3}
+  m_Script: {fileID: 11500000, guid: 430e9089d43d3b342b9e189d8b5229c5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   horizontalBarPrefab: {fileID: -4012950144330184779, guid: e9f17e0f7552ad9438e0f01fde326fa5,
     type: 3}
   textPrefab: {fileID: 8114073792596459760, guid: 30335c7154c8e484c95b7162ad6cc9c5,
     type: 3}
-  argSocketPrefab: {fileID: 3593016678496454593, guid: 5ee9526dda978984fbc9b9265b9c022d,
+  argSocketPrefab: {fileID: -7829140018879509090, guid: 5ee9526dda978984fbc9b9265b9c022d,
     type: 3}
-  blockSocketPrefab: {fileID: 6853516753295849633, guid: 96b4b5e629ea8144a856c9ed9b76932f,
+  blockSocketPrefab: {fileID: 5131847917412223128, guid: 96b4b5e629ea8144a856c9ed9b76932f,
     type: 3}
   canvas: {fileID: 0}
-  padding: {x: 5, y: 5, z: 5, w: 5}
-  verticalSpacing: 5
+  padding: {x: 10, y: 10, z: 10, w: 10}
+  verticalSpacing: 15
