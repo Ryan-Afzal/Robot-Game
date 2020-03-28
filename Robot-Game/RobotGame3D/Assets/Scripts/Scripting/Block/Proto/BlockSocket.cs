@@ -9,17 +9,26 @@ using UnityEngine.EventSystems;
 
 namespace Assets.Scripts.Scripting.Block.Proto {
 
+	[RequireComponent(typeof(Image))]
 	[RequireComponent(typeof(RectTransform))]
 	public class BlockSocket : MonoBehaviour {
 
+		public static readonly Vector2 baseDelta = new Vector2(100, 25);
+
+		private Image image;
 		private RectTransform rectTransform;
 
-		private Block parentBlock;
+		internal Block parentBlock;
 
 		private Block block;
 
 		public void Awake() {
+			this.image = GetComponent<Image>();
 			this.rectTransform = GetComponent<RectTransform>();
+
+			this.image.enabled = true;
+			this.rectTransform.sizeDelta = baseDelta;
+
 			this.block = null;
 		}
 
@@ -36,13 +45,24 @@ namespace Assets.Scripts.Scripting.Block.Proto {
 		}
 
 		public void InvokeHierarchyChanged() {
-			this.parentBlock.HierarchyChanged();
+			this.parentBlock?.HierarchyChanged();
 		}
 
 		public void Attach(Block block) {
 			if (this.block is null) {
 				this.block = block;
 				this.block.prevSocket = this;
+
+				this.image.enabled = false;
+				var blockTrans = block.GetComponent<RectTransform>();
+				this.rectTransform.sizeDelta = new Vector2(
+					blockTrans.rect.width
+						- block.padding.x
+						- block.padding.y, 
+					blockTrans.rect.height
+						- block.padding.z
+						- block.padding.w
+					);
 
 				this.InvokeHierarchyChanged();
 			} else {
@@ -54,6 +74,9 @@ namespace Assets.Scripts.Scripting.Block.Proto {
 			if (this.block is object) {
 				this.block.prevSocket = null;
 				this.block = null;
+
+				this.image.enabled = true;
+				this.rectTransform.sizeDelta = baseDelta;
 
 				this.InvokeHierarchyChanged();
 			}
