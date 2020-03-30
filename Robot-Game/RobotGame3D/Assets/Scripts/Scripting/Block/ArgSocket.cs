@@ -15,16 +15,25 @@ namespace Assets.Scripts.Scripting.Block {
 	[RequireComponent(typeof(RectTransform))]
 	public sealed class ArgSocket : MonoBehaviour {
 
+		public static readonly Vector2 baseDelta = new Vector2(100, 25);
+
 		private Image image;
 		private Shadow shadow;
 		private RectTransform rectTransform;
 
-		private Argument argument;
+		internal IHierarchyChangedHandler parent;
+
+		public Argument AttachedArgument { get; private set; }
 
 		public void Awake() {
 			this.image = GetComponent<Image>();
 			this.shadow = GetComponent<Shadow>();
 			this.rectTransform = GetComponent<RectTransform>();
+
+			this.image.enabled = true;
+			this.rectTransform.sizeDelta = baseDelta;
+
+			AttachedArgument = null;
 		}
 
 		public void Start() {
@@ -35,14 +44,57 @@ namespace Assets.Scripts.Scripting.Block {
 
 		}
 
-		public void Detach() {
-			this.argument.Base = null;
-			this.argument = null;
+		public void OnMouseEnter() {
+			if (AttachedArgument is null) {
+				this.shadow.enabled = true;
+			}
+		}
+
+		public void OnMouseExit() {
+			this.shadow.enabled = false;
+		}
+
+		public void SetParent(IHierarchyChangedHandler parent) {
+			this.parent = parent;
+		}
+
+		public void InvokeHierarchyChanged() {
+			this.RecalculateSize();
+
+			this.parent?.HierarchyChanged();
 		}
 
 		public void Attach(Argument argument) {
-			this.argument = argument;
-			this.argument.Base = this;
+			if (AttachedArgument is null) {
+				AttachedArgument = argument;
+				AttachedArgument.prevSocket = this;
+
+				this.image.enabled = false;
+
+				this.InvokeHierarchyChanged();
+			} else {
+				throw new InvalidOperationException();
+			}
+		}
+
+		public void Detach() {
+			if (AttachedArgument is object) {
+				AttachedArgument.prevSocket = null;
+				AttachedArgument = null;
+
+				this.image.enabled = true;
+
+				this.InvokeHierarchyChanged();
+			}
+		}
+
+		private void RecalculateSize() {
+			if (AttachedArgument is null) {
+				this.rectTransform.sizeDelta = baseDelta;
+			} else {
+				var argSize = AttachedArgument.GetTotalSize();
+				this.rectTransform.sizeDelta = argSize;
+			}
 		}
 
 	}

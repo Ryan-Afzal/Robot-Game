@@ -10,34 +10,48 @@ using UnityEngine.EventSystems;
 namespace Assets.Scripts.Scripting.Block {
 
 	[RequireComponent(typeof(Image))]
+	[RequireComponent(typeof(Shadow))]
 	[RequireComponent(typeof(RectTransform))]
-	public class BlockSocket : MonoBehaviour {
+	public sealed class BlockSocket : MonoBehaviour {
 
 		public static readonly Vector2 baseDelta = new Vector2(100, 25);
 
 		private Image image;
+		private Shadow shadow;
 		private RectTransform rectTransform;
 
 		internal Block parentBlock;
 
-		private Block block;
+		public Block AttachedBlock { get; private set; }
 
 		public void Awake() {
 			this.image = GetComponent<Image>();
+			this.shadow = GetComponent<Shadow>();
 			this.rectTransform = GetComponent<RectTransform>();
 
 			this.image.enabled = true;
-			this.rectTransform.sizeDelta = baseDelta;
 
-			this.block = null;
+			AttachedBlock = null;
+
+			this.RecalculateSize();
 		}
 
 		public void Start() {
-
+			this.RecalculateSize();
 		}
 
 		public void Update() {
 
+		}
+
+		public void OnMouseEnter() {
+			if (AttachedBlock is null) {
+				this.shadow.enabled = true;
+			}
+		}
+
+		public void OnMouseExit() {
+			this.shadow.enabled = false;
 		}
 
 		public void SetParentBlock(Block block) {
@@ -45,24 +59,17 @@ namespace Assets.Scripts.Scripting.Block {
 		}
 
 		public void InvokeHierarchyChanged() {
+			this.RecalculateSize();
+
 			this.parentBlock?.HierarchyChanged();
 		}
 
 		public void Attach(Block block) {
-			if (this.block is null) {
-				this.block = block;
-				this.block.prevSocket = this;
+			if (AttachedBlock is null) {
+				AttachedBlock = block;
+				AttachedBlock.prevSocket = this;
 
 				this.image.enabled = false;
-				var blockTrans = block.GetComponent<RectTransform>();
-				this.rectTransform.sizeDelta = new Vector2(
-					blockTrans.rect.width
-						- block.padding.x
-						- block.padding.y, 
-					blockTrans.rect.height
-						- block.padding.z
-						- block.padding.w
-					);
 
 				this.InvokeHierarchyChanged();
 			} else {
@@ -71,14 +78,22 @@ namespace Assets.Scripts.Scripting.Block {
 		}
 
 		public void Detach() {
-			if (this.block is object) {
-				this.block.prevSocket = null;
-				this.block = null;
+			if (AttachedBlock is object) {
+				AttachedBlock.prevSocket = null;
+				AttachedBlock = null;
 
 				this.image.enabled = true;
-				this.rectTransform.sizeDelta = baseDelta;
 
 				this.InvokeHierarchyChanged();
+			}
+		}
+
+		private void RecalculateSize() {
+			if (AttachedBlock is null) {
+				this.rectTransform.sizeDelta = new Vector2(Mathf.Min(baseDelta.x, parentBlock?.GetTotalSize().x ?? baseDelta.x), baseDelta.y);
+			} else {
+				var blockSize = AttachedBlock.GetTotalSize();
+				this.rectTransform.sizeDelta = blockSize - new Vector2(AttachedBlock.Padding.x + AttachedBlock.Padding.y, 0);
 			}
 		}
 
