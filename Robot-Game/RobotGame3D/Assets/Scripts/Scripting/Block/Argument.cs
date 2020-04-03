@@ -32,7 +32,7 @@ namespace Assets.Scripts.Scripting.Block {
 		protected ArgSocket[] argSockets;
 		public virtual Vector4 Padding => new Vector4(10, 10, 10, 10);
 
-		protected abstract float VerticalSpacing { get; }
+		public virtual float VerticalSpacing => 10;
 		protected abstract string[] Text { get; }
 
 		public void Awake() {
@@ -100,7 +100,7 @@ namespace Assets.Scripts.Scripting.Block {
 			this.rectTransform.ForceUpdateRectTransforms();
 		}
 
-		public void InitializeTextAndArgSockets(string[] text) {
+		public virtual void InitializeTextAndArgSockets(string[] text) {
 			int i = 0;
 
 			this.argSockets = new ArgSocket[text.Length];
@@ -132,7 +132,9 @@ namespace Assets.Scripts.Scripting.Block {
 		}
 
 		public void OnDrag(PointerEventData eventData) {
-			transform.position = eventData.position;
+			var screenPoint = Input.mousePosition;
+			screenPoint.z = this.canvas.planeDistance;
+			transform.position = this.canvas.worldCamera.ScreenToWorldPoint(screenPoint);
 		}
 
 		public void OnEndDrag(PointerEventData eventData) {
@@ -165,7 +167,11 @@ namespace Assets.Scripts.Scripting.Block {
 
 		#endregion Drag
 
-		public abstract IArgInstruction Compile();
+		public IArgInstruction GetCompiledArgument() {
+			return this.Compile();
+		}
+
+		protected abstract IArgInstruction Compile();
 
 	}
 

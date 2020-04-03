@@ -16,25 +16,25 @@ namespace Assets.Scripts.Robot {
 
 		public SensorManager[] sensorManagers;
 
-		private void Awake() {
-			
-		}
-
-		private void Start() {
+		public void Awake() {
 			for (int i = 0; i < this.linearActuatorManagers.Length; i++) {
 				this.linearActuatorManagers[i].ID = i;
 			}
-			
+
 			for (int i = 0; i < this.rotaryActuatorManagers.Length; i++) {
 				this.rotaryActuatorManagers[i].ID = i;
 			}
-			
+
 			for (int i = 0; i < this.sensorManagers.Length; i++) {
 				this.sensorManagers[i].ID = i;
 			}
 		}
 
-		private void Update() {
+		public void Start() {
+			
+		}
+
+		public void Update() {
 			
 		}
 

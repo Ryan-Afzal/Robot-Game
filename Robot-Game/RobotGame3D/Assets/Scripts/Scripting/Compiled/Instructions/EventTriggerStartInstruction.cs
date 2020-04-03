@@ -3,18 +3,17 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using UnityEngine;
 
 namespace Assets.Scripts.Scripting.Compiled.Instructions {
-	public class PrintInstruction : Instruction {
+	public class EventTriggerStartInstruction : Instruction {
 
-		public PrintInstruction(IArgInstruction[] args) : base(args) {
+		public EventTriggerStartInstruction() : base(new IArgInstruction[0]) {
 
 		}
 
 		public override async Task Execute(InstructionExecutionArgs args) {
-			var obj = await this.args[0].Execute(args);
-			await Task.Run(() => Debug.Log(obj));
+			// Do Nothing
 		}
+
 	}
 }

@@ -7,16 +7,10 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace Assets.Scripts.Scripting.Block.Instructions {
-	public class StartBlock : Block {
+	public sealed class StartBlock : EventTriggerBlock {
 
-		public override bool Draggable => false;
-
-		public override string[][] Text => new string[][] {
-			new string[] { "Start" }
-		};
-
-		public override IInstruction Compile() {
-			return this.GetNextBlock().Compile();
+		public override string GetName() {
+			return "Start";
 		}
 
 	}

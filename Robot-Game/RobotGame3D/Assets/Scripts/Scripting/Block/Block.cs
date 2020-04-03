@@ -41,7 +41,7 @@ namespace Assets.Scripts.Scripting.Block {
         public virtual float VerticalSpacing => 10;
         public virtual Vector2 DefaultSize => new Vector2(100, 50);
 
-        public virtual bool Draggable => true;
+        public virtual bool Droppable => true;
 
         public abstract string[][] Text { get; }
 
@@ -62,7 +62,7 @@ namespace Assets.Scripts.Scripting.Block {
             this.IntializeTextAndArgSockets(Text);
 		}
 
-        public void Start() {
+        public virtual void Start() {
             this.HierarchyChanged();
         }
 
@@ -199,7 +199,7 @@ namespace Assets.Scripts.Scripting.Block {
         #region Drag
 
         public void OnBeginDrag(PointerEventData eventData) {
-            if (Draggable) {
+            if (Droppable) {
                 this.rectTransform.SetParent(this.canvas.transform, true);
 
                 this.prevSocket?.Detach();
@@ -207,13 +207,13 @@ namespace Assets.Scripts.Scripting.Block {
         }
 
         public void OnDrag(PointerEventData eventData) {
-            if (Draggable) {
-                transform.position = eventData.position;
-            }
+            var screenPoint = Input.mousePosition;
+            screenPoint.z = this.canvas.planeDistance;
+            transform.position = this.canvas.worldCamera.ScreenToWorldPoint(screenPoint);
         }
 
         public void OnEndDrag(PointerEventData eventData) {
-            if (Draggable) {
+            if (Droppable) {
                 var list = new List<RaycastResult>();
                 EventSystem.current.RaycastAll(eventData, list);
 
@@ -249,11 +249,22 @@ namespace Assets.Scripts.Scripting.Block {
 
         #region Compilation
 
-        protected Block GetNextBlock() {
+        private Block GetNextBlock() {
             return this.blockSockets[this.blockSockets.Length - 1].AttachedBlock;
         }
 
-        public abstract IInstruction Compile();
+        public IInstruction GetCompiledInstruction() {
+            var output = this.Compile();
+            output.Next = this.GetNextBlock()?.GetCompiledInstruction();
+
+            if (output.Next is object) {
+                output.Next.Previous = output;
+            }
+
+            return output;
+        }
+
+        protected abstract IInstruction Compile();
 
         #endregion Compilation
 

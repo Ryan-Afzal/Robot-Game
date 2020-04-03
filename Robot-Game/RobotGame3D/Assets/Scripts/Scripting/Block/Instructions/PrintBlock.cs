@@ -7,18 +7,14 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace Assets.Scripts.Scripting.Block.Instructions {
-	public class IfBlock : Block {
+	public class PrintBlock : Block {
 
 		public override string[][] Text => new string[][] {
-			new string[] { "If", "" },
-			new string[] { "" }
+			new string[] { "Print", "" }
 		};
 
 		protected override IInstruction Compile() {
-			var instructions = new IInstruction[] { this.blockSockets[0].AttachedBlock.GetCompiledInstruction() };
-			var args = new IArgInstruction[] { this.argSockets[0].AttachedArgument.GetCompiledArgument() };
-
-			return new IfInstruction(instructions, args);
+			return new PrintInstruction(new IArgInstruction[] { this.argSockets[0].AttachedArgument.GetCompiledArgument() });
 		}
 
 	}
