@@ -15,7 +15,7 @@ namespace Assets.Scripts.Scripting.Block.Instructions {
 		};
 
 		protected override IInstruction Compile() {
-			var instructions = new IInstruction[] { this.blockSockets[0].AttachedBlock.GetCompiledInstruction() };
+			var instructions = new IInstruction[] { this.blockSockets[0].AttachedBlock?.GetCompiledInstruction() };
 			var args = new IArgInstruction[] { this.argSockets[0].AttachedArgument.GetCompiledArgument() };
 
 			return new IfInstruction(instructions, args);

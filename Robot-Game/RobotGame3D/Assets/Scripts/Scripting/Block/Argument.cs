@@ -141,6 +141,11 @@ namespace Assets.Scripts.Scripting.Block {
 			var list = new List<RaycastResult>();
 			EventSystem.current.RaycastAll(eventData, list);
 
+			if (list.Select(r => r.gameObject.GetComponent<TrashSlot>()).FirstOrDefault(r => r is object) is object) {
+				Destroy(gameObject);
+				return;
+			}
+
 			var results = list
 				.Select(r => r.gameObject.GetComponent<ArgSocket>())
 				.Where(s => s is object);

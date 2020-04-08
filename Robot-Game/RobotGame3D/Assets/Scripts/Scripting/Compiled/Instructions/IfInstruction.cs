@@ -16,7 +16,7 @@ namespace Assets.Scripts.Scripting.Compiled.Instructions {
 			bool test = (bool)await this.args[0].Execute(args);
 
 			if (test) {
-				await this[0].ExecuteChainAsync(args);
+				await this[0]?.ExecuteChainAsync(args);
 			}
 		}
 	}

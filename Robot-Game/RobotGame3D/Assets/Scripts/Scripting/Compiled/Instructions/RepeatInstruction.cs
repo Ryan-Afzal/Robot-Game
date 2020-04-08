@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using UnityEngine;
 
 namespace Assets.Scripts.Scripting.Compiled.Instructions {
 	/// <summary>
@@ -15,10 +16,10 @@ namespace Assets.Scripts.Scripting.Compiled.Instructions {
 		}
 
 		public override async Task Execute(InstructionExecutionArgs args) {
-			int test = (int)await this.args[0].Execute(args);
+			int test = (int)((float)(await this.args[0].Execute(args)));
 
 			for (int i = 0; i < test; i++) {
-				await this[0].ExecuteChainAsync(args);
+				await this[0]?.ExecuteChainAsync(args);
 			}
 		}
 	}

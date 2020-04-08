@@ -13,7 +13,7 @@ namespace Assets.Scripts.Scripting.Compiled.Instructions {
 
 		public override async Task Execute(InstructionExecutionArgs args) {
 			while ((bool)await this.args[0].Execute(args)) {
-				await this[0].ExecuteChainAsync(args);
+				await this[0]?.ExecuteChainAsync(args);
 			}
 		}
 
