@@ -5,9 +5,15 @@ using UnityEngine;
 
 namespace Assets.Scripts.Robot.Motion {
 	
+	[RequireComponent(typeof(ConfigurableJoint))]
 	public abstract class MotionManager : Manager {
 
-		public ConfigurableJoint joint;
+		protected ConfigurableJoint joint;
+
+		public override void Awake() {
+			this.joint = GetComponent<ConfigurableJoint>();
+			base.Awake();
+		}
 		
 	}
 

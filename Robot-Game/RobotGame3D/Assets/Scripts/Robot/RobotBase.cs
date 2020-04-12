@@ -31,7 +31,7 @@ namespace Assets.Scripts.Robot {
 		}
 
 		public void Start() {
-			
+
 		}
 
 		public void Update() {

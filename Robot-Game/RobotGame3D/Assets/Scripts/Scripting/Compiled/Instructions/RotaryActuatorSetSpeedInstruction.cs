@@ -15,6 +15,9 @@ namespace Assets.Scripts.Scripting.Compiled.Instructions {
 			int actuatorID = (int)(float)await this.args[0].Execute(args);
 			float setpoint = (float)await this.args[1].Execute(args);
 
+			UnityEngine.Debug.Log(actuatorID);
+			UnityEngine.Debug.Log(setpoint);
+
 			args.Robot.rotaryActuatorManagers[actuatorID].SetActuatorSpeed(setpoint);
 		}
 	}

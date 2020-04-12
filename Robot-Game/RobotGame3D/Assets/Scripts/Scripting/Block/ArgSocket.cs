@@ -32,6 +32,7 @@ namespace Assets.Scripts.Scripting.Block {
 
 			this.image.enabled = true;
 			this.rectTransform.sizeDelta = baseDelta;
+			this.rectTransform.ForceUpdateRectTransforms();
 
 			AttachedArgument = null;
 		}

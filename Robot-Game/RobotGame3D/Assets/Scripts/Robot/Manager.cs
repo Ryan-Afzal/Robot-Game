@@ -14,7 +14,7 @@ namespace Assets.Scripts.Robot {
 
 		public RobotBase robotBase;
 		
-		private void Awake() {
+		public virtual void Awake() {
 			this.InitConstraints();
 		}
 

@@ -18,8 +18,11 @@ namespace Assets.Scripts.Scripting {
 
 		private IDictionary<object, IInstruction> events;
 
+		public IDictionary<string, object> Variables { get; private set; }
+
 		public void Awake() {
 			this.events = new Dictionary<object, IInstruction>();
+			Variables = new Dictionary<string, object>();
 		}
 
 		public void Start() {
@@ -48,7 +51,8 @@ namespace Assets.Scripts.Scripting {
 
 		private InstructionExecutionArgs GetExecutionArgs() {
 			return new InstructionExecutionArgs() {
-				Robot = this.robot
+				Robot = this.robot,
+				Controller = this
 			};
 		}
 

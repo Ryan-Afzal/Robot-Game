@@ -86,6 +86,7 @@ namespace Assets.Scripts.Robot.Motion {
 		}
 
 		public bool RotateActuatorTo(float angleInDegrees) {
+			this.SetActuatorSpeed(0.0f);
 			this.joint.targetRotation = this.GetRotationFromAngle(angleInDegrees);
 			this.joint.angularXDrive = new JointDrive() {
 				positionSpring = this.rotationSpeed,

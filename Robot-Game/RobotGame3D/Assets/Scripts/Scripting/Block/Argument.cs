@@ -30,9 +30,9 @@ namespace Assets.Scripts.Scripting.Block {
 		internal ArgSocket prevSocket;
 
 		protected ArgSocket[] argSockets;
-		public virtual Vector4 Padding => new Vector4(10, 10, 10, 10);
+		public virtual Vector4 Padding => new Vector4(5, 5, 5, 5);
 
-		public virtual float VerticalSpacing => 10;
+		public virtual float VerticalSpacing => 5;
 		protected abstract string[] Text { get; }
 
 		public void Awake() {

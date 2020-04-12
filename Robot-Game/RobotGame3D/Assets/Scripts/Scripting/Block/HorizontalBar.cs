@@ -36,7 +36,7 @@ namespace Assets.Scripts.Scripting.Block {
 			float Dx = 0;
 
 			foreach (var child in children) {
-				float _y = (y - child.rect.height) / 2;
+				float _y = -(y - child.rect.height) / 2;
 
 				child.localPosition = new Vector3(Dx, _y, 0);
 
