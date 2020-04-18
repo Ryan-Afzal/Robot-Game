@@ -36,43 +36,15 @@ namespace Assets.Scripts.Robot.Motion {
 		public float precisionTolerance;
 
 		protected override void InitConstraints() {
-			if (this.hasExtensionLimit) {
-				this.joint.linearLimit = new SoftJointLimit() { limit = this.extensionLimit };
-			}
-
-			this.joint.axis = this.axis;
-			this.joint.xMotion = ConfigurableJointMotion.Limited;
-			this.joint.yMotion = ConfigurableJointMotion.Locked;
-			this.joint.zMotion = ConfigurableJointMotion.Locked;
-			this.joint.angularXMotion = ConfigurableJointMotion.Locked;
-			this.joint.angularYMotion = ConfigurableJointMotion.Locked;
-			this.joint.angularZMotion = ConfigurableJointMotion.Locked;
-			this.joint.targetPosition = Vector3.zero;
-
-			JointDrive drive = new JointDrive() {
-				positionSpring = this.extensionSpeed,
-				positionDamper = this.extensionSpeed,
-				maximumForce = this.extensionSpeed * 2
-			};
-			this.joint.xDrive = drive;
-			this.joint.yDrive = drive;
-			this.joint.zDrive = drive;
-		}
-
-		public Vector3 RelativePosition {
-			get {
-				return this.joint.transform.localPosition;
-			}
+			throw new NotImplementedException();
 		}
 
 		public bool ExtendActuatorTo(float distance) {
-			this.joint.targetPosition = new Vector3(distance, 0, 0);
-			return true;
+			throw new NotImplementedException();
 		}
 
 		public bool ExtendActuatorBy(float distance) {
-			this.joint.targetPosition += new Vector3(distance, 0, 0);
-			return true;
+			throw new NotImplementedException();
 		}
 
 		public bool FullExtendActuator() {

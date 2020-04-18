@@ -33,6 +33,10 @@ namespace Assets.Scripts.Scripting {
 
 		}
 
+		public void ClearVariables() {
+			Variables.Clear();
+		}
+
 		public void ClearEvents() {
 			this.events.Clear();
 		}

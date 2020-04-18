@@ -12,7 +12,7 @@ namespace Assets.Scripts.Scripting.Compiled.Instructions {
 		}
 
 		protected override object Operate(object[] objects) {
-			return (double)objects[0] > (double)objects[1];
+			return (float)objects[0] > (float)objects[1];
 		}
 	}
 }

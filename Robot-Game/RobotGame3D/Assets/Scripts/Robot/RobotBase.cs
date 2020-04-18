@@ -16,6 +16,8 @@ namespace Assets.Scripts.Robot {
 
 		public SensorManager[] sensorManagers;
 
+		public MagnetManager magnetManager;
+
 		public void Awake() {
 			for (int i = 0; i < this.linearActuatorManagers.Length; i++) {
 				this.linearActuatorManagers[i].ID = i;

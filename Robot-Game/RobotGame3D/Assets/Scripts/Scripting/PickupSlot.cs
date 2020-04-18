@@ -15,7 +15,8 @@ namespace Assets.Scripts.Scripting {
 
         public GameObject prefab;
 
-		public Canvas canvas;
+        public RectTransform canvas;
+        public Canvas canvasTransform;
 
         private Image image;
         private RectTransform rectTransform;
@@ -27,8 +28,10 @@ namespace Assets.Scripts.Scripting {
             var block = this.prefab.GetComponent<Block.Block>();
             if (block is null) {
                 this.prefab.GetComponent<Argument>().canvas = this.canvas;
+                this.prefab.GetComponent<Argument>().canvasTransform = this.canvasTransform;
             } else {
                 block.canvas = this.canvas;
+                block.canvasTransform = this.canvasTransform;
             }
 		}
 
@@ -50,8 +53,8 @@ namespace Assets.Scripts.Scripting {
 
         public void OnDrag(PointerEventData eventData) {
             var screenPoint = Input.mousePosition;
-            screenPoint.z = this.canvas.planeDistance;
-            this.rectTransform.position = this.canvas.worldCamera.ScreenToWorldPoint(screenPoint);
+            screenPoint.z = this.canvasTransform.planeDistance;
+            this.rectTransform.position = this.canvasTransform.worldCamera.ScreenToWorldPoint(screenPoint);
         }
 
         public void OnEndDrag(PointerEventData eventData) {
@@ -70,7 +73,8 @@ namespace Assets.Scripts.Scripting {
             var obj = results.FirstOrDefault();
 
             if (obj is null) {
-                Instantiate(this.prefab, this.canvas.transform).transform.position = this.rectTransform.position;
+                var output = Instantiate(this.prefab, this.canvas.transform);
+                output.transform.position = this.rectTransform.position;
             }
 
             Destroy(gameObject);

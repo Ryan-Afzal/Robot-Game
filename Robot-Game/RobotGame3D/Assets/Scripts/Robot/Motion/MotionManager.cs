@@ -5,13 +5,24 @@ using UnityEngine;
 
 namespace Assets.Scripts.Robot.Motion {
 	
-	[RequireComponent(typeof(ConfigurableJoint))]
 	public abstract class MotionManager : Manager {
 
-		protected ConfigurableJoint joint;
+		[HideInInspector]
+		public LinkedList<Transform> children;
+
+		public void AddChild(Transform t) {
+			if (this.children is null) {
+				this.children = new LinkedList<Transform>();
+			}
+
+			this.children.AddLast(t);
+		}
 
 		public override void Awake() {
-			this.joint = GetComponent<ConfigurableJoint>();
+			if (this.children is null) {
+				this.children = new LinkedList<Transform>();
+			}
+
 			base.Awake();
 		}
 		

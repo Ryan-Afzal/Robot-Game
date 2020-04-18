@@ -10,104 +10,73 @@ namespace Assets.Scripts.Robot.Motion {
 
 	public class RotaryActuatorManager : MotionManager {
 
-		/// <summary>
-		/// The axes of the angle of rotation, relative to this component's <code>Transform</code>
-		/// </summary>
-		public Vector3 axis;
+		private Vector3 initialPos;
+		private Quaternion initialRot;
 
-		/// <summary>
-		/// Determines whether there is a limit to how far the actuator can rotate.
-		/// </summary>
-		public bool hasRotationLimit;
+		public MotionManager parent;
 
-		/// <summary>
-		/// The max rotation limit, in degrees.
-		/// </summary>
-		public float rotationMaxLimit;
+		public Vector3 relativeAnchorPosition;
 
-		/// <summary>
-		/// The min rotation limit, in degrees.
-		/// </summary>
-		public float rotationMinLimit;
+		public int axis;
 
-		/// <summary>
-		/// The speed of rotation when rotating to a specific angle.
-		/// </summary>
-		public float rotationSpeed;
+		private float speed;
+
+		public float DeltaAngle { get; private set; }
 
 		protected override void InitConstraints() {
-			this.joint.axis = this.axis;
-			this.joint.xMotion = ConfigurableJointMotion.Locked;
-			this.joint.yMotion = ConfigurableJointMotion.Locked;
-			this.joint.zMotion = ConfigurableJointMotion.Locked;
-			this.joint.angularXMotion = ConfigurableJointMotion.Free;
-			this.joint.angularYMotion = ConfigurableJointMotion.Locked;
-			this.joint.angularZMotion = ConfigurableJointMotion.Locked;
-			this.joint.rotationDriveMode = RotationDriveMode.XYAndZ;
-
-			this.joint.angularYZLimitSpring = new SoftJointLimitSpring() { spring = 1, damper = 1 };
+			this.speed = 0.0f;
+			this.parent?.AddChild(transform);
+			this.initialPos = transform.position;
+			this.initialRot = transform.rotation;
+			DeltaAngle = 0.0f;
 		}
 
-		public Quaternion RelativeRotation {
-			get {
-				return this.joint.transform.localRotation;
+		public void Update() {
+			float angle = this.speed * Time.deltaTime;
+
+			this.Rotate(transform.TransformPoint(this.relativeAnchorPosition), this.GetAxis(), angle);
+		}
+
+		private void Rotate(Vector3 point, Vector3 axis, float angle) {
+			foreach (var t in this.children) {
+				if (t.TryGetComponent(out RotaryActuatorManager r)) {
+					r.Rotate(point, axis, angle);
+				} else {
+					t.RotateAround(point, axis, angle);
+				}
 			}
+
+			var prevRot = transform.rotation;
+
+			transform.RotateAround(point, axis, angle);
+
+			DeltaAngle += (angle / Mathf.Abs(angle)) * Quaternion.Angle(transform.rotation, prevRot);
 		}
 
-		public Vector3 RelativeAngularVelocity {
-			get {
-				return this.GetComponent<Rigidbody>().angularVelocity;
+		private Vector3 GetAxis() {// 0=x, 1=y, 2=z
+			if (this.axis == 0) {
+				return transform.right;
+			} else if (this.axis == 1) {
+				return transform.up;
+			} else {
+				return transform.forward;
 			}
 		}
 
 		public bool SetActuatorSpeed(float speed) {
-			this.joint.targetAngularVelocity = new Vector3(speed, 0, 0);
-			float d = Mathf.Abs(this.joint.targetAngularVelocity.x - GetComponent<Rigidbody>().angularVelocity.x);
-			this.joint.angularXDrive = new JointDrive() {
-				positionSpring = d,
-				positionDamper = d,
-				maximumForce = d * 2
-			};
+			this.speed = speed;
 			return true;
-		}
-
-		public bool IncreaseActuatorSpeedBy(float speed) {
-			this.joint.targetAngularVelocity += new Vector3(speed, 0, 0);
-			this.joint.angularXDrive = new JointDrive() {
-				positionSpring = this.joint.angularXDrive.positionSpring + speed,
-				positionDamper = this.joint.angularXDrive.positionDamper + speed,
-				maximumForce = this.joint.angularXDrive.maximumForce + speed * 2
-			};
-			return true;
-		}
-
-		public Vector3 GetActuatorSpeed() {
-			return this.joint.targetAngularVelocity;
 		}
 
 		public bool RotateActuatorTo(float angleInDegrees) {
-			this.SetActuatorSpeed(0.0f);
-			this.joint.targetRotation = this.GetRotationFromAngle(angleInDegrees);
-			this.joint.angularXDrive = new JointDrive() {
-				positionSpring = this.rotationSpeed,
-				positionDamper = this.rotationSpeed,
-				maximumForce = this.rotationSpeed * 2
-			};
-			return true;
+			throw new NotImplementedException();
 		}
 
-		public bool RotateActuatorBy(float angleInDegrees) {
-			this.joint.targetRotation *= this.GetRotationFromAngle(angleInDegrees);
-			this.joint.angularXDrive = new JointDrive() {
-				positionSpring = this.rotationSpeed,
-				positionDamper = this.rotationSpeed,
-				maximumForce = this.rotationSpeed * 2
-			};
-			return true;
-		}
-
-		private Quaternion GetRotationFromAngle(float angleInDegrees) {
-			return Quaternion.Euler(angleInDegrees, 0.0f, 0.0f);
+		public void Reset() {
+			this.speed = 0;
+			transform.position = this.initialPos;
+			transform.rotation = this.initialRot;
+			DeltaAngle = 0.0f;
 		}
 
 	}

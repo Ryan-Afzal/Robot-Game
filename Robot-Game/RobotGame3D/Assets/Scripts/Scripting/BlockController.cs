@@ -47,10 +47,15 @@ namespace Assets.Scripts.Scripting {
 		/// Turns all instructions into a node graph representation and binds it to event triggers on the <see cref="InstructionController"/>.
 		/// </summary>
 		public void CompileAllInstructions() {
-			this.instructionController.ClearEvents();
+			try {
+				this.instructionController.ClearEvents();
+				this.instructionController.ClearVariables();
 
-			foreach (var block in this.eventTriggers) {
-				this.instructionController.RegisterEvent(block.GetName(), block.GetCompiledInstruction());
+				foreach (var block in this.eventTriggers) {
+					this.instructionController.RegisterEvent(block.GetName(), block.GetCompiledInstruction());
+				}
+			} catch (Exception) {
+				Debug.Log("COMPILATION ERROR!");
 			}
 		}
 

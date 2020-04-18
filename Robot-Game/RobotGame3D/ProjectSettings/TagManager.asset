@@ -5,6 +5,7 @@ TagManager:
   serializedVersion: 2
   tags:
   - BlockAndInstructionController
+  - Box
   layers:
   - Default
   - TransparentFX

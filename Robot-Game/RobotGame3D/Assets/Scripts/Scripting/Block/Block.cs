@@ -22,7 +22,8 @@ namespace Assets.Scripts.Scripting.Block {
         public BlockSocket blockSocketPrefab;
 
         // Inspector Parameters
-        public Canvas canvas;
+        public RectTransform canvas;
+        public Canvas canvasTransform;
 
         // Components
         private Image image;
@@ -208,8 +209,8 @@ namespace Assets.Scripts.Scripting.Block {
 
         public void OnDrag(PointerEventData eventData) {
             var screenPoint = Input.mousePosition;
-            screenPoint.z = this.canvas.planeDistance;
-            transform.position = this.canvas.worldCamera.ScreenToWorldPoint(screenPoint);
+            screenPoint.z = this.canvasTransform.planeDistance;
+            transform.position = this.canvasTransform.worldCamera.ScreenToWorldPoint(screenPoint);
         }
 
         public void OnEndDrag(PointerEventData eventData) {

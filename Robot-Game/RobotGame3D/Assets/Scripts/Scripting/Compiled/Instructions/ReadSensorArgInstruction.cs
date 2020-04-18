@@ -12,7 +12,7 @@ namespace Assets.Scripts.Scripting.Compiled.Instructions {
 		}
 
 		public override async Task<object> Execute(InstructionExecutionArgs args) {
-			int test = (int)await this.args[0].Execute(args);
+			int test = (int)(float)await this.args[0].Execute(args);
 
 			return args.Robot.sensorManagers[test].GetData();
 		}
