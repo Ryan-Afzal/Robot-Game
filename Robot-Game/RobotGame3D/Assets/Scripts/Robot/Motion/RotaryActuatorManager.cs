@@ -50,10 +50,12 @@ namespace Assets.Scripts.Robot.Motion {
 
 			transform.RotateAround(point, axis, angle);
 
-			DeltaAngle += (angle / Mathf.Abs(angle)) * Quaternion.Angle(transform.rotation, prevRot);
+			if (angle != 0f) {
+				DeltaAngle += (angle / Mathf.Abs(angle)) * Quaternion.Angle(transform.rotation, prevRot);
+			}
 		}
 
-		private Vector3 GetAxis() {// 0=x, 1=y, 2=z
+		public Vector3 GetAxis() {// 0=x, 1=y, 2=z
 			if (this.axis == 0) {
 				return transform.right;
 			} else if (this.axis == 1) {

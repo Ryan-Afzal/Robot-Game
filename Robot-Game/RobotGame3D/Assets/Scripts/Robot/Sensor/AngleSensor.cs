@@ -19,6 +19,8 @@ namespace Assets.Scripts.Robot.Sensor {
 		}
 
 		protected internal override object GetData() {
+			
+
 			float angle = this.rotaryActuatorManager.DeltaAngle;
 			//return (angle / Mathf.Abs(angle)) * Quaternion.Angle(transform.rotation, this.rotaryActuatorManager.parent?.transform.rotation ?? Quaternion.identity);
 			return angle % 360;
